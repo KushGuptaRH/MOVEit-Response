@@ -13,6 +13,8 @@ Between May 31 and June 16, three distinct vulnerabilities have been reported th
 "June 15, 2023, Today, a third-party publicly posted a new SQLi vulnerability. We have taken HTTPs traffic down for MOVEit Cloud in light of the newly published vulnerability and are asking All MOVEit Transfer customers to immediately take down their HTTP and HTTPs traffic to safeguard their environments while the patch is finalized. We are currently testing the patch and we will update customers shortly."
 <br>
 MOVEit Transfer Critical Vulnerability (May 2023) (CVE-2023-34362)
+
+
 https://community.progress.com/s/article/MOVEit-Transfer-Critical-Vulnerability-31May2023
 
 
