@@ -2,10 +2,7 @@
 
 #### Created as a proof of concept to show how Ansible can automate tasks to help mitigate and analyze Windows MOVEit servers
 <br>
-SHOULD NOT BE RUN without prior validation, testing, reading and testing through the playbook. Has not been tested on a MoveIT server due to lack of availability on my end.
-
-
-This playbook will not be able to do all the remidiation steps to the MOVEit application itself since the API will be down, but it can do a lot with the Windows system to immediately take the reccomended mitigation steps and do some verification.
+SHOULD NOT BE RUN without prior validation, testing, reading, and testing through the playbook. Has not been tested on a MoveIT server due to a lack of availability on my end. This playbook will not be able to do all the remediation steps to the MOVEit application itself since the API will be down, but it can do a lot with the Windows system to immediately take the recommended mitigation steps and do some verification.
 <br>
 https://www.progress.com/security/moveit-transfer-and-moveit-cloud-vulnerability
 Between May 31 and June 16, three distinct vulnerabilities have been reported that are affecting MOVEit Transfer and MOVEit Cloud.
@@ -17,6 +14,8 @@ Between May 31 and June 16, three distinct vulnerabilities have been reported th
 <br>
 MOVEit Transfer Critical Vulnerability (May 2023) (CVE-2023-34362)
 https://community.progress.com/s/article/MOVEit-Transfer-Critical-Vulnerability-31May2023
+
+
 Recommended Remediation
 1. Disable all HTTP and HTTPs traffic to your MOVEit Transfer environment
                     - It is important to note, that until HTTP and HTTPS traffic is enabled again: 
