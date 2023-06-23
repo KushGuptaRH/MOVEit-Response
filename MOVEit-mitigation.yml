@@ -66,8 +66,8 @@
 # View this page for complete information: https://docs.ansible.com/ansible/latest/os_guide/windows_winrm.html
 # ----------------------------------------------------------------------------------------------------------------
 ---
-- name: Emergency MOVEit Remidiation and verification steps
-  hosts: MOVEit_Host_Group # The group of hosts you want to remidiate
+- name: Emergency MOVEit Remediation and verification steps
+  hosts: MOVEit_Host_Group # The group of hosts you want to remediate
   become: yes
   vars:
     - ansible_user: Username
@@ -85,7 +85,7 @@
         script: |
           New-NetFirewallRule -DisplayName "MOVEit HTTPS default inbound block" -Direction Inbound -LocalPort 443 -Protocol TCP -Action Block  
 
-    # Remidiation calls for deletion of the human2.aspx (or any files with human2 prefix) and .cmdline script files
+    # Remidiation calls for the deletion of the human2.aspx (or any files with human2 prefix) and .cmdline script files
     # Note: The web shell was initially observed with the name human2.aspx in an effort to masquerade 
     #       as the legitimate human.aspx file present as part of MOVEit Transfer software. 
     #       https://www.cisa.gov/news-events/cybersecurity-advisories/aa23-158a
@@ -126,7 +126,7 @@
       register: app_web_files
 
     
-    # Note: The next time the web application is accessed, they will be rebuilt properly. 
+    # Note: The next time the web application is accessed, it will be rebuilt properly. 
     #       It is normal to have 1 APP_WEB_[random].dll file located in this directory.
     - name: Start IIS (iisreset /start) 
       ansible.windows.win_command: iisreset /start
