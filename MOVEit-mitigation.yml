@@ -122,7 +122,7 @@
     - name: Check all APP_WEB_[random].dll files located in C:\Windows\Microsoft. NET\Framework64\
       ansible.windows.win_powershell:
         script: |
-          Get-Childitem –Path C:\Windows\Microsoft. NET\Framework64\ -Include APP_WEB_*.dll -File -Recurse -force -ErrorAction SilentlyContinue
+          Get-Childitem –Path 'C:\Windows\Microsoft. NET\Framework64\' -Include APP_WEB_*.dll -File -Recurse -force -ErrorAction SilentlyContinue
       register: app_web_files
 
     
