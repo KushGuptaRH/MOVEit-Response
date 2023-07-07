@@ -1,0 +1,19 @@
+---
+- name: Windows and MOVEit Detection steps
+  hosts: MOVEit_Host_Group # The group of hosts you want to check
+  tasks:
+    - name: Exit if not a windows server
+      ansible.builtin.fail:
+        msg: 'Not a Windows server'
+      when: ansible_facts['os_family'] != 'Windows'
+
+      # You can set the MOVEit_path variable if your paths are outside of the default placement 
+    - name: Identify MOVEit software
+      ansible.windows.win_stat:
+        path: '{{ MOVEit_path | default("C:\Program Files\MOVEit\MiCentralCFG.exe") }}'
+      register: installed
+
+    - name: Exit if not a MOVEit server
+      ansible.builtin.fail: 
+        msg: 'Not a MOVEit server'
+      when: installed != 'true'
