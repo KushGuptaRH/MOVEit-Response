@@ -72,7 +72,7 @@
     - ansible_connection: winrm
     - ansible_winrm_transport: ntlm
   tasks:
-    - name: Fail if not a windows server
+    - name: Fail if not a Windows server
       ansible.builtin.fail:
         msg: 'Not a Windows server'
       when: ansible_facts['os_family'] != 'Windows'
@@ -108,7 +108,7 @@
       register: human_cmdline_files
 
     # Checking since March 1 2023
-    - name: Set date to define what you consider new
+    - name: Set a date to define what you consider new
       ansible.windows.win_powershell: 
         script: |
           Get-Date -Year 2023 -Month 03 -Day 01 
