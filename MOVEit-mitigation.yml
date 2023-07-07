@@ -82,6 +82,10 @@
         path: '{{ MOVEit_path | default("C:\Program Files\MOVEit\MiCentralCFG.exe") }}'
       register: installed
 
+    - name: Debug output of installed
+      debug:
+        msg: '{{ installed }}'
+
     - name: Exit if not a MOVEit server
       ansible.builtin.fail: 
         msg: 'Not a MOVEit server'
