@@ -68,7 +68,7 @@
 ---
 - name: Emergency MOVEit Remediation and verification steps
   hosts: MOVEit_Host_Group # The group of hosts you want to remediate
-  become: yes
+  become_method: runas
   vars:
     - ansible_user: Username
     - ansible_password: Password
