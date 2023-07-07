@@ -79,17 +79,13 @@
       
     - name: Identify MOVEit software
       ansible.windows.win_stat:
-        path: '{{ MOVEit_path | default("C:\Program Files") }}'
+        path: '{{ MOVEit_path | default("C:\Program Files\MOVEit\MiCentralCFG.exe") }}'
       register: installed
-
-    - name: Debug output of installed
-      debug:
-        msg: '{{ installed }}'
 
     - name: Exit if not a MOVEit server
       ansible.builtin.fail: 
         msg: 'Not a MOVEit server'
-      when: installed != 'false'
+      when: installed.stat.exists != 'false'
       
     - name: Disable all HTTP traffic to your MOVEit Transfer environment
       ansible.windows.win_powershell:
