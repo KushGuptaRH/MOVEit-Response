@@ -68,12 +68,13 @@
 ---
 - name: Emergency MOVEit Remediation and verification steps
   hosts: MOVEit_Host_Group # The group of hosts you want to remediate
-  become_method: runas
+#  become_method: runas
   vars:
     - ansible_user: Username
     - ansible_password: Password
     - ansible_connection: winrm
     - ansible_winrm_transport: ntlm
+#    - become_user: 
   tasks:
 
     - name: Exit if not a windows server
