@@ -72,7 +72,7 @@
     - ansible_connection: winrm
     - ansible_winrm_transport: ntlm
   tasks:
-    - name: Exit if not a windows server
+    - name: Fail if not a windows server
       ansible.builtin.fail:
         msg: 'Not a Windows server'
       when: ansible_facts['os_family'] != 'Windows'
@@ -82,10 +82,10 @@
         path: '{{ MOVEit_path | default("C:\Program Files\MOVEit\MiCentralCFG.exe") }}'
       register: installed
 
-    - name: Exit if not a MOVEit server
+    - name: Fail if not a MOVEit server
       ansible.builtin.fail: 
         msg: 'Not a MOVEit server'
-      when: installed != 'true'
+      when: installed.stat.exists != 'false'
       
     - name: Disable all HTTP traffic to your MOVEit Transfer environment
       ansible.windows.win_powershell:
