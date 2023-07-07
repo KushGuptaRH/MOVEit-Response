@@ -83,7 +83,7 @@
       
     - name: Identify MOVEit software
       ansible.windows.win_stat:
-        path: {{ MOVEit_path | default('C:\Program Files\MOVEit\MiCentralCFG.exe') }}
+        path: '{{ MOVEit_path | default("C:\Program Files\MOVEit\MiCentralCFG.exe") }}'
       register: installed
 
     - name: Exit if not a MOVEit server
