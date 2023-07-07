@@ -1,0 +1,51 @@
+# ansible-galaxy collection install redhat_cop.controller_configuration
+
+---
+- name: Setup MOVEit demo
+  hosts: localhost
+  gather_facts: false
+
+  tasks:
+    - name: Default Components
+      ansible.builtin.include_role:
+        name: "{{ item }}"
+      loop: "{{ controller_components }}"
+      vars:
+        controller_components:
+          - job_templates
+          - controller_projects
+
+        controller_organizations:
+          - name: Default
+
+        controller_projects:
+          - name: MOVEit repository
+            organization: Default
+            scm_branch: main
+            scm_clean: 'no'
+            scm_delete_on_update: 'no'
+            scm_type: git
+            scm_update_on_launch: 'no'
+            scm_url: https://github.com/KushGuptaRH/MOVEit-Response.git
+
+        controller_templates:
+          - name: "Detect Windows and MOVEit Servers"
+            job_type: run
+            inventory: 'Workshop Inventory'
+            project: 'MOVEit repository'
+            playbook: 'check-server.yml'
+            execution_environment: Default execution environment
+            survey_enabled: true
+            survey:
+              name: ''
+              description: ''
+              spec:
+                - question_name: 'Enter a path to check only if NOT in the default C:\Program Files\'
+                  type: text
+                  variable: MOVEit_path
+                  required: false
+
+    - name: Print Message
+      ansible.builtin.debug:
+        msg: "{{ user_message }}"
+      when: user_message is defined
