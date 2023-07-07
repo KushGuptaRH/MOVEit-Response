@@ -70,8 +70,8 @@
   hosts: MOVEit_Host_Group # The group of hosts you want to remediate
 #  become_method: runas
   vars:
-    - ansible_user: {{ username }}
-    - ansible_password: {{ password }}
+    - ansible_user: '{{ username }}'
+    - ansible_password: '{{ password }}'
     - ansible_connection: winrm
     - ansible_winrm_transport: ntlm
 #    - become_user: 
