@@ -87,7 +87,8 @@
       register: installed
 
     - name: Exit if not a MOVEit server
-      ansible.builtin.fail: 'Not a MOVEit server'
+      ansible.builtin.fail: 
+        msg: 'Not a MOVEit server'
       when: installed != 'true'
       
     - name: Disable all HTTP traffic to your MOVEit Transfer environment
