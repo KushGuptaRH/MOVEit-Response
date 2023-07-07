@@ -6,7 +6,8 @@
       ansible.builtin.fail:
         msg: 'Not a Windows server'
       when: ansible_facts['os_family'] != 'Windows'
-      
+
+      # You can change the MOVEit_path variable if your installations are outside of the default path
     - name: Identify MOVEit software
       ansible.windows.win_stat:
         path: '{{ MOVEit_path | default("C:\Program Files\MOVEit\MiCentralCFG.exe") }}'
