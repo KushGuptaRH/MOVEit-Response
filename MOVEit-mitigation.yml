@@ -79,7 +79,7 @@
     - name: Exit if not a windows server
       ansible.builtin.fail:
         msg: 'Not a Windows server'
-      when: ansible_facts['os_family'] != "Windows"
+      when: ansible_facts['os_family'] != 'Windows'
       
     - name: Identify MOVEit software
       ansible.windows.win_stat:
@@ -87,7 +87,7 @@
       register: installed
 
     - name: Exit if not a MOVEit server
-      ansible.builtin.fail: "Not a MOVEit server"
+      ansible.builtin.fail: 'Not a MOVEit server'
       when: installed != 'true'
       
     - name: Disable all HTTP traffic to your MOVEit Transfer environment
@@ -111,7 +111,7 @@
       register: human_cmdline_files
 
     # Checking since March 1 2023
-    - name: Set date to define what you consider "new"
+    - name: Set date to define what you consider new
       ansible.windows.win_powershell: 
         script: |
           Get-Date -Year 2023 -Month 03 -Day 01 
@@ -148,15 +148,15 @@
 
     - name: Remove any unauthorized user accounts on MOVEit.
       debug:
-        msg: "See Progress MOVEit Users Documentation article - https://docs.progress.com/bundle/moveit-transfer-web-admin-help-2022/page/Users.html"
+        msg: 'See Progress MOVEit Users Documentation article - https://docs.progress.com/bundle/moveit-transfer-web-admin-help-2022/page/Users.html'
 
     - name:  Remove all active sessions on MOVEit.
       debug:
-        msg: "The steps to remove all active sessions can be found in the Admin Features on the Home Page guide: https://docs.progress.com/bundle/moveit-transfer-web-admin-help-2022/page/Admin-Features-on-the-Home-Page.html"
+        msg: 'The steps to remove all active sessions can be found in the Admin Features on the Home Page guide: https://docs.progress.com/bundle/moveit-transfer-web-admin-help-2022/page/Admin-Features-on-the-Home-Page.html'
 
     - name: Review MOVEit logs for unexpected downloads of files from unknown IPs or large numbers of files downloaded.
       debug:
-        msg: "For more information on reviewing logs, please refer to MOVEit Transfer Logs guide: https://docs.progress.com/bundle/moveit-transfer-web-admin-help-2022/page/Logs.html"
+        msg: 'For more information on reviewing logs, please refer to MOVEit Transfer Logs guide: https://docs.progress.com/bundle/moveit-transfer-web-admin-help-2022/page/Logs.html'
 
     - name: Review IIS logs for any events including GET /human2.aspx.
       ansible.windows.win_powershell:
@@ -166,13 +166,13 @@
 
     - name: Reset service account credentials for affected systems and MOVEit Service Account.
       debug: 
-        msg: "See KB 000115941: https://community.progress.com/s/article/Transfer-Automation-Change-Windows-Service-Account-Password"
+        msg: 'See KB 000115941: https://community.progress.com/s/article/Transfer-Automation-Change-Windows-Service-Account-Password'
     
     - name: Patch your system
       debug:
-        msg: "For patching the May 31 and June 9 vulnerabilities, use the installers listed here: https://community.progress.com/s/article/MOVEit-Transfer-Critical-Vulnerability-CVE-2023-35036-June-9-2023 . After applying that, to fix the June 15 CVE, use this: https://community.progress.com/s/article/MOVEit-Transfer-Critical-Vulnerability-15June2023"
+        msg: 'For patching the May 31 and June 9 vulnerabilities, use the installers listed here: https://community.progress.com/s/article/MOVEit-Transfer-Critical-Vulnerability-CVE-2023-35036-June-9-2023 . After applying that, to fix the June 15 CVE, use this: https://community.progress.com/s/article/MOVEit-Transfer-Critical-Vulnerability-15June2023'
 
     - name: Verification
       debug:
-        msg: "To confirm the files have been successfully deleted and no unauthorized accounts remain, follow steps 2A again (can be accomplished by running this playbook again after patching). If you do find indicators of compromise, you should reset the service account credentials again."
+        msg: 'To confirm the files have been successfully deleted and no unauthorized accounts remain, follow steps 2A again (can be accomplished by running this playbook again after patching). If you do find indicators of compromise, you should reset the service account credentials again.'
 
