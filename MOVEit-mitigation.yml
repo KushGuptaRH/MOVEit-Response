@@ -98,8 +98,9 @@
 
           New-NetFirewallRule -DisplayName "MOVEit HTTP default outbound block" -Direction Outbound -LocalPort 80 -Protocol TCP -Action Block
           
-          New-NetFirewallRule -DisplayName "MOVEit HTTPS default outbound block" -Direction Outbound -LocalPort 443 -Protocol TCP -Action Block    
-
+          New-NetFirewallRule -DisplayName "MOVEit HTTPS default outbound block" -Direction Outbound -LocalPort 443 -Protocol TCP -Action Block
+      become: yes
+      
     # Remidiation calls for the deletion of the human2.aspx (or any files with human2 prefix) and .cmdline script files
     # Note: The web shell was initially observed with the name human2.aspx in an effort to masquerade 
     #       as the legitimate human.aspx file present as part of MOVEit Transfer software. 
@@ -109,6 +110,7 @@
         script: |
           Get-Childitem –Path C:\ -Include human2.* *.cmdline -File -Recurse -force -ErrorAction SilentlyContinue
       register: human_cmdline_files
+      become: yes
 
     # Checking since March 1 2023
     - name: Set a date to define what you consider new
@@ -122,15 +124,18 @@
         script: |
           Get-ChildItem -Path C:\MOVEitTransfer\wwwroot\ -File -Recurse -ErrorAction SilentlyContinue | Where-Object { $_.LastWriteTime -ge {{ date }} }
       register: new_wwwroot_files
+      become: yes
 
     - name: Look for new files created in the C:\Windows\TEMP\[random]\ directory with a file extension of [.]cmdline
       ansible.windows.win_powershell:
         script: |
           Get-ChildItem -Path C:\Windows\TEMP\ -Include *.cmdline -File -Recurse -ErrorAction SilentlyContinue | Where-Object { $_.LastWriteTime -ge {{ date }} }
       register: new_temp_cmdline_files
+      become: yes
 
     - name: Stop IIS (iisreset /stop)
       ansible.windows.win_command: iisreset /stop
+      become: yes
         
       # Remidiation calls for the Deletion of all APP_WEB_[random].dll files located in 
       # C:\Windows\Microsoft. NET\Framework64\[version]\Temporary ASP. NET Files\root\[random]\[random]\
@@ -139,11 +144,13 @@
         script: |
           Get-Childitem –Path 'C:\Windows\Microsoft. NET\Framework64\' -Include APP_WEB_*.dll -File -Recurse -force -ErrorAction SilentlyContinue
       register: app_web_files
+      become: yes
 
     # Note: The next time the web application is accessed, it will be rebuilt properly. 
     #       It is normal to have 1 APP_WEB_[random].dll file located in this directory.
     - name: Start IIS (iisreset /start) 
       ansible.windows.win_command: iisreset /start
+      become: yes
 
     - name: Remove any unauthorized user accounts on MOVEit.
       debug:
@@ -162,6 +169,7 @@
         script: |
           Get-Childitem –Path C:\inetpub\logs\LogFiles\ -Include *human2* -Recurse -force -ErrorAction SilentlyContinue
       register: iis_human2_log_check
+      become: yes
 
     - name: Reset service account credentials for affected systems and MOVEit Service Account.
       debug: 
@@ -185,6 +193,7 @@
           Remove-NetFirewallRule –DisplayName “MOVEit HTTP default outbound block”
           Remove-NetFirewallRule –DisplayName “MOVEit HTTPS default outbound block"
       tags: [ never ]
+      become: yes
 
 
 
