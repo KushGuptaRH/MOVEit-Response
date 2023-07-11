@@ -11,6 +11,9 @@
 ---
 - name: Windows and MOVEit HTTP and HTTPS Firewall Block
   hosts: all
+  vars:
+    - ansible_become_method: runas # Since Ansible 2.3, privilege elevation can be used on Windows hosts through the runas method: https://docs.ansible.com/ansible/2.7/user_guide/become.html#become-and-windows
+    - ansible_become_user: {{ ansible_user }}
   tasks:
     - name: Disable all inbound and outbound HTTP and HTTPS traffic to your MOVEit Transfer environment through Firewall Rules
       ansible.windows.win_powershell:
@@ -22,7 +25,8 @@
           New-NetFirewallRule -DisplayName "MOVEit HTTP default outbound block" -Direction Outbound -LocalPort 80 -Protocol TCP -Action Block
           
           New-NetFirewallRule -DisplayName "MOVEit HTTPS default outbound block" -Direction Outbound -LocalPort 443 -Protocol TCP -Action Block
-
+      become: yes
+      
     # Should ONLY be run after verification of a safe and remediated server
     # Since Ansible 2.5, If you assign the 'never' tag to a task or play, Ansible will skip that task or play unless you specifically request it (--tags never)
     - name: Remove the new Firewall Rules
@@ -33,3 +37,4 @@
           Remove-NetFirewallRule –DisplayName “MOVEit HTTP default outbound block”
           Remove-NetFirewallRule –DisplayName “MOVEit HTTPS default outbound block"
       tags: [ never ]    
+      become: yes
