@@ -67,7 +67,7 @@
 # ----------------------------------------------------------------------------------------------------------------
 ---
 - name: Emergency MOVEit Remediation and verification steps
-  hosts: MOVEit_Host_Group # The group of hosts you want to remediate
+  hosts: all # The group of hosts you want to remediate
   vars:
     - ansible_connection: winrm
     - ansible_winrm_transport: ntlm
@@ -174,13 +174,16 @@
       debug:
         msg: 'To confirm the files have been successfully deleted and no unauthorized accounts remain, follow steps 2A again (can be accomplished by running this playbook again after patching). If you do find indicators of compromise, you should reset the service account credentials again.'
 
-    # Should ONLY be uncommented after verification of a safe and remidiated server
-    # - name: Take out firewall rules
-    #   ansible.windows.win_powershell:
-    #     script: |
-    #       Remove-NetFirewallRule –DisplayName “MOVEit HTTP default inbound block”
-    #       Remove-NetFirewallRule –DisplayName “MOVEit HTTPS default inbound block”
-    #       Remove-NetFirewallRule –DisplayName “MOVEit HTTP default outbound block”
-    #       Remove-NetFirewallRule –DisplayName “MOVEit HTTPS default outbound block"
+    # Should ONLY be uncommented after verification of a safe and remediated server
+    # Since Ansible 2.5, If you assign the 'never' tag to a task or play, Ansible will skip that task or play unless you specifically request it (--tags never)
+    - name: Remove the new Firewall Rules
+      ansible.windows.win_powershell:
+        script: |
+          Remove-NetFirewallRule –DisplayName “MOVEit HTTP default inbound block”
+          Remove-NetFirewallRule –DisplayName “MOVEit HTTPS default inbound block”
+          Remove-NetFirewallRule –DisplayName “MOVEit HTTP default outbound block”
+          Remove-NetFirewallRule –DisplayName “MOVEit HTTPS default outbound block"
+      tags: [ never ]
+
 
 

@@ -1,6 +1,6 @@
 ---
 - name: Windows and MOVEit Detection steps
-  hosts: MOVEit_Host_Group # The group of hosts you want to check
+  hosts: all # The group of hosts you want to check
   tasks:
     - name: Fail if not a Windows server
       ansible.builtin.fail:
