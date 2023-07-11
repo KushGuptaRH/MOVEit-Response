@@ -87,15 +87,25 @@
         msg: 'Not a MOVEit server'
       when: installed.stat.exists != 'false'
       
-    - name: Disable all HTTP traffic to your MOVEit Transfer environment
+    - name: Disable all inbound HTTP traffic to your MOVEit Transfer environment
       ansible.windows.win_powershell:
         script: |
           New-NetFirewallRule -DisplayName "MOVEit HTTP default inbound block" -Direction Inbound -LocalPort 80 -Protocol TCP -Action Block
     
-    - name: Disable all HTTPS traffic to your MOVEit Transfer environment
+    - name: Disable all inbound HTTPS traffic to your MOVEit Transfer environment
       ansible.windows.win_powershell:
         script: |
-          New-NetFirewallRule -DisplayName "MOVEit HTTPS default inbound block" -Direction Inbound -LocalPort 443 -Protocol TCP -Action Block  
+          New-NetFirewallRule -DisplayName "MOVEit HTTPS default inbound block" -Direction Inbound -LocalPort 443 -Protocol TCP -Action Block
+
+    - name: Disable all outbound HTTP traffic to your MOVEit Transfer environment
+      ansible.windows.win_powershell:
+        script: |
+          New-NetFirewallRule -DisplayName "MOVEit HTTP default outbound block" -Direction Outbound -LocalPort 80 -Protocol TCP -Action Block
+    
+    - name: Disable all outbound HTTPS traffic to your MOVEit Transfer environment
+      ansible.windows.win_powershell:
+        script: |
+          New-NetFirewallRule -DisplayName "MOVEit HTTPS default outbound block" -Direction Outbound -LocalPort 443 -Protocol TCP -Action Block    
 
     # Remidiation calls for the deletion of the human2.aspx (or any files with human2 prefix) and .cmdline script files
     # Note: The web shell was initially observed with the name human2.aspx in an effort to masquerade 
@@ -172,4 +182,9 @@
     - name: Verification
       debug:
         msg: 'To confirm the files have been successfully deleted and no unauthorized accounts remain, follow steps 2A again (can be accomplished by running this playbook again after patching). If you do find indicators of compromise, you should reset the service account credentials again.'
+
+    - name: Take out firewall rules
+      ansible.windows.win_powershell:
+        script: |
+          
 
