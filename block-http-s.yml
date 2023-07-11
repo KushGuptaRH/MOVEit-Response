@@ -1,0 +1,28 @@
+---
+- name: Windows and MOVEit HTTP and HTTPS Firewall Block
+  hosts: all
+  vars:
+    - ansible_connection: winrm
+    - ansible_winrm_transport: ntlm
+  tasks:
+    - name: Disable all inbound and outbound HTTP and HTTPS traffic to your MOVEit Transfer environment through Firewall Rules
+      ansible.windows.win_powershell:
+        script: |
+          New-NetFirewallRule -DisplayName "MOVEit HTTP default inbound block" -Direction Inbound -LocalPort 80 -Protocol TCP -Action Block
+
+          New-NetFirewallRule -DisplayName "MOVEit HTTPS default inbound block" -Direction Inbound -LocalPort 443 -Protocol TCP -Action Block
+
+          New-NetFirewallRule -DisplayName "MOVEit HTTP default outbound block" -Direction Outbound -LocalPort 80 -Protocol TCP -Action Block
+          
+          New-NetFirewallRule -DisplayName "MOVEit HTTPS default outbound block" -Direction Outbound -LocalPort 443 -Protocol TCP -Action Block
+
+    # Should ONLY be uncommented after verification of a safe and remediated server
+    # Since Ansible 2.5, If you assign the 'never' tag to a task or play, Ansible will skip that task or play unless you specifically request it (--tags never)
+    - name: Remove the new Firewall Rules
+      ansible.windows.win_powershell:
+        script: |
+          Remove-NetFirewallRule –DisplayName “MOVEit HTTP default inbound block”
+          Remove-NetFirewallRule –DisplayName “MOVEit HTTPS default inbound block”
+          Remove-NetFirewallRule –DisplayName “MOVEit HTTP default outbound block”
+          Remove-NetFirewallRule –DisplayName “MOVEit HTTPS default outbound block"
+      tags: [ never ]    
