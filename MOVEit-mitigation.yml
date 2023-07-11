@@ -138,7 +138,6 @@
           Get-Childitem –Path 'C:\Windows\Microsoft. NET\Framework64\' -Include APP_WEB_*.dll -File -Recurse -force -ErrorAction SilentlyContinue
       register: app_web_files
 
-    
     # Note: The next time the web application is accessed, it will be rebuilt properly. 
     #       It is normal to have 1 APP_WEB_[random].dll file located in this directory.
     - name: Start IIS (iisreset /start) 
