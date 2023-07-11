@@ -13,7 +13,7 @@
           
           New-NetFirewallRule -DisplayName "MOVEit HTTPS default outbound block" -Direction Outbound -LocalPort 443 -Protocol TCP -Action Block
 
-    # Should ONLY be uncommented after verification of a safe and remediated server
+    # Should ONLY be run after verification of a safe and remediated server
     # Since Ansible 2.5, If you assign the 'never' tag to a task or play, Ansible will skip that task or play unless you specifically request it (--tags never)
     - name: Remove the new Firewall Rules
       ansible.windows.win_powershell:
