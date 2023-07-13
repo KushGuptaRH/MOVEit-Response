@@ -72,7 +72,7 @@
     - ansible_connection: winrm
     - ansible_winrm_transport: ntlm
     - ansible_become_method: runas # Since Ansible 2.3, privilege elevation can be used on Windows hosts through the runas method: https://docs.ansible.com/ansible/2.7/user_guide/become.html#become-and-windows
-    - ansible_become_user: {{ ansible_user }}
+    - ansible_become_user: '{{ ansible_user }}'
   tasks:
     - name: Fail if not a Windows server
       ansible.builtin.fail:
@@ -117,7 +117,7 @@
       ansible.windows.win_powershell: 
         script: |
           Get-Date -Year 2023 -Month 03 -Day 01 
-      register: date  
+      register: date.host_out  
 
     - name: Look for any new files created in the C:\MOVEitTransfer\wwwroot\ directory
       ansible.windows.win_powershell:
