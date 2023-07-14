@@ -62,7 +62,11 @@
 # You can use Ansible with WinRm to run playbooks on Windows nodes. 
 # The port for WinRm HTTP is 5985 while the WinRm port for HTTPS is 5986 by default, so it will continue to work after the 80/443 shut off.
 # NTLM is an older authentication mechanism used by Microsoft that can support both local and domain accounts.
-# NTLM is enabled by default on the WinRm service, so no setup is required before using it.
+# NTLM for HTTP is enabled by default on the WinRm service, so no setup is required before using it.
+# If using HTTPS is not an option, then HTTP can be used when the authentication option is NTLM, Kerberos or CredSSP. 
+# These protocols will encrypt the WinRM payload with their own encryption method before sending it to the server. 
+# The message-level encryption is not used when running over HTTPS because the encryption uses the more secure TLS protocol instead.
+# PLEASE USE HTTPS IF IT IS AN OPTION
 # View this page for complete information: https://docs.ansible.com/ansible/latest/os_guide/windows_winrm.html
 # ----------------------------------------------------------------------------------------------------------------
 ---
