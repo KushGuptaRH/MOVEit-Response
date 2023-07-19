@@ -72,11 +72,13 @@
 ---
 - name: Emergency MOVEit Remediation and verification steps
   hosts: all # The group of hosts you want to remediate
+  become: yes
   vars:
     - ansible_connection: winrm
     - ansible_winrm_transport: ntlm
     - ansible_become_method: runas # Since Ansible 2.3, privilege elevation can be used on Windows hosts through the runas method: https://docs.ansible.com/ansible/2.7/user_guide/become.html#become-and-windows
     - ansible_become_user: '{{ Username }}'
+    - firewall_rule_state: "present"
   tasks:
     - name: Fail if not a Windows server
       ansible.builtin.fail:
@@ -94,16 +96,10 @@
       when: installed.stat.exists != 'false'
       
     - name: Disable all inbound and outbound HTTP and HTTPS traffic to your MOVEit Transfer environment
-      ansible.windows.win_powershell:
-        script: |
-          New-NetFirewallRule -DisplayName "MOVEit HTTP default inbound block" -Direction Inbound -LocalPort 80 -Protocol TCP -Action Block
-
-          New-NetFirewallRule -DisplayName "MOVEit HTTPS default inbound block" -Direction Inbound -LocalPort 443 -Protocol TCP -Action Block
-
-          New-NetFirewallRule -DisplayName "MOVEit HTTP default outbound block" -Direction Outbound -LocalPort 80 -Protocol TCP -Action Block
-          
-          New-NetFirewallRule -DisplayName "MOVEit HTTPS default outbound block" -Direction Outbound -LocalPort 443 -Protocol TCP -Action Block
-      become: yes
+      include_role:
+        name: moveit-firewall-rules
+      vars:
+        firewall_rule_state: '{{ firewall_rule_state }}'
       
     # Remidiation calls for the deletion of the human2.aspx (or any files with human2 prefix) and .cmdline script files
     # Note: The web shell was initially observed with the name human2.aspx in an effort to masquerade 
@@ -186,18 +182,3 @@
     - name: Verification
       debug:
         msg: 'To confirm the files have been successfully deleted and no unauthorized accounts remain, follow steps 2A again (can be accomplished by running this playbook again after patching). If you do find indicators of compromise, you should reset the service account credentials again.'
-
-    # Should ONLY be run after verification of a safe and remediated server
-    # Since Ansible 2.5, If you assign the 'never' tag to a task or play, Ansible will skip that task or play unless you specifically request it (--tags never)
-    - name: Remove the new Firewall Rules
-      ansible.windows.win_powershell:
-        script: |
-          Remove-NetFirewallRule –DisplayName “MOVEit HTTP default inbound block”
-          Remove-NetFirewallRule –DisplayName “MOVEit HTTPS default inbound block”
-          Remove-NetFirewallRule –DisplayName “MOVEit HTTP default outbound block”
-          Remove-NetFirewallRule –DisplayName “MOVEit HTTPS default outbound block"
-      tags: [ never ]
-      become: yes
-
-
-
