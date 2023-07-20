@@ -80,24 +80,13 @@
     - ansible_become_user: '{{ Username }}'
     - firewall_rule_state: "present"
   tasks:
-    - name: Fail if not a Windows server
-      ansible.builtin.fail:
-        msg: 'Not a Windows server'
-      when: ansible_facts['os_family'] != 'Windows'
-      
-    - name: Identify MOVEit software
-      ansible.windows.win_stat:
-        path: '{{ MOVEit_path | default("C:\Program Files\MOVEit\MiCentralCFG.exe") }}'
-      register: installed
-
-    - name: Fail if not a MOVEit server
-      ansible.builtin.fail: 
-        msg: 'Not a MOVEit server'
-      when: installed.stat.exists != 'false'
+    - name: Identify a Windows and MOVEit host
+      include_role:
+        name: moveit_server_check
       
     - name: Disable all inbound and outbound HTTP and HTTPS traffic to your MOVEit Transfer environment
       include_role:
-        name: moveit-firewall-rules
+        name: moveit_firewall_rules
       vars:
         firewall_rule_state: '{{ firewall_rule_state }}'
       

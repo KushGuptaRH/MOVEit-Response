@@ -1,2 +1,4 @@
 collections:
   - name: community.windows
+  - name: ansible.windows
+  - name: kushguptarh.moveit_response
