@@ -1,0 +1,8 @@
+---
+firewall_rules:
+  - { name: "MOVEit HTTP default inbound block", localport: 80, Direction: "Inbound" }
+  - { name: "MOVEit HTTPS default inbound block", localport: 443, Direction: "Inbound" }
+  - { name: "MOVEit HTTP default outbound block", localport: 80, Direction: "Outbound" }
+  - { name: "MOVEit HTTPS default outbound block", localport: 443, Direction: "Outbound" }
+
+firewall_rule_state: "present"
