@@ -1,0 +1,21 @@
+# MOVEit Transfer Critical Vulnerability (May 2023) (CVE-2023-34362)
+# https://community.progress.com/s/article/MOVEit-Transfer-Critical-Vulnerability-31May2023
+# Recommended Remediation
+# 1. Disable all HTTP and HTTPs traffic to your MOVEit Transfer environment
+#                    - It is important to note, that until HTTP and HTTPS traffic is enabled again:
+#                       - Users will not be able to log on to the MOVEit Transfer web UI
+#                       - MOVEit Automation tasks that use the native MOVEit Transfer host will not work
+#                       - REST, Java and .NET APIs will not work
+#                       - MOVEit Transfer add-in for Outlook will not work
+#                    - SFTP and FTP/s protocols will continue to work as normal
+---
+- name: Disable all inbound and outbound HTTP and HTTPS traffic to your MOVEit Transfer environment through Firewall Rules
+  community.windows.win_firewall_rule:
+    name: "{{ item.name }}"
+    localport: "{{ item.localport }}"
+    action: block
+    direction: "{{ item.Direction }}"
+    protocol: tcp
+    state: "{{ firewall_rule_state }}"
+    enabled: true
+  loop: "{{ firewall_rules }}"

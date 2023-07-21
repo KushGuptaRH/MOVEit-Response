@@ -29,7 +29,7 @@ Example Playbook
 
     - hosts: Suspected-MOVEit-servers
       roles:
-         - role: kushguptarh.moveit-server-check
+         - role: kushguptarh.moveit_server_check
 
 License
 -------

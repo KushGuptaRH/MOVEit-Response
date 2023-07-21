@@ -1,0 +1,29 @@
+---
+# tasks file for moveit-server-check
+- name: Block check for Windows and MOVEit Executable
+  block:
+      - name: Fail if not a Windows host
+        ansible.builtin.fail:
+            msg: 'Not a Windows host'
+        when: ansible_facts['os_family'] != 'Windows'
+
+        # You can change the moveit_exe_path variable if your installations are outside of the default path
+      - name: Attempt to identify the MOVEit Executable
+        ansible.windows.win_stat:
+            path: '{{ moveit_exe_path | default("C:\Program Files\MOVEit\MiCentralCFG.exe") }}'
+        register: installed
+        failed_when: installed.stat.exists == 'false'
+
+      - name: MOVEit Server Identified
+        ansible.builtin.debug:
+            msg: 'Both a Windows host and a MOVEit executable have been found'
+  rescue:
+      - name: Notify if Windows not detected
+        ansible.builtin.debug:
+            msg: 'This Operating System was not found to be Windows'
+        when: ansible_facts['os_family'] != 'Windows'
+
+      - name: Identify if the MOVEit Executable not detected
+        ansible.builtin.debug:
+            msg: 'The MOVEit Executable was not found to exist in the path defined in the moveit_exe_path variable'
+        when: installed.stat.exists == 'false'
