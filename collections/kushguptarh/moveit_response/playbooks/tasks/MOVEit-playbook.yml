@@ -72,7 +72,7 @@
 # ----------------------------------------------------------------------------------------------------------------
 ---
 - name: Emergency MOVEit Remediation and verification steps
-  hosts: all # The group of hosts you want to remediate
+  hosts: '{{moveit_servers|default("all")}}' # The group of hosts you want to remediate
   become: true
   vars:
     - ansible_connection: winrm
@@ -81,6 +81,7 @@
                                    # - https://docs.ansible.com/ansible/2.7/user_guide/become.html#become-and-windows
     - ansible_become_user: '{{ ansible_user }}'
     - firewall_state: "present"
+    - new: '30w'
   tasks:
     - name: Identify a Windows and MOVEit host
       ansible.builtin.include_role:
@@ -110,8 +111,8 @@
     - name: Look for any new .cmdline files created within 30 weeks
       ansible.windows.win_find:
         paths: C:\
-        age: {{ new }}                        # Find files newer than 30 weeks
-                                              # - You can choose seconds, minutes, hours, days or weeks by the first letter of those words (e.g., “2s”, “10d”, 1w”)
+        age: '{{ new }}' # Find files newer than 30 weeks
+                         # - You can choose seconds, minutes, hours, days or weeks by the first letter of those words (e.g., “2s”, “10d”, 1w”)
         recurse: true
         follow: true
         hidden: true
@@ -123,7 +124,7 @@
     - name: Look for any files created in the C:\MOVEitTransfer\wwwroot directory within 30 weeks
       ansible.windows.win_find:
         paths: C:\MOVEitTransfer\wwwroot
-        age: {{ new }}
+        age: '{{ new }}'
         recurse: true
         follow: true
         hidden: true
@@ -133,7 +134,7 @@
     - name: Look for new files created in the C:\Windows\TEMP\[random]\ directory with a file extension of [.]cmdline
       ansible.windows.win_find:
         paths: C:\Windows\TEMP
-        age: {{ new }}
+        age: '{{ new }}'
         recurse: true
         follow: true
         hidden: true
@@ -144,14 +145,14 @@
 
     - name: Stop IIS (iisreset /stop)
       ansible.windows.win_command: iisreset /stop
-      become: yes
-        
-      # Remidiation calls for the Deletion of all APP_WEB_[random].dll files located in 
+      become: true
+
+      # Remidiation calls for the Deletion of all APP_WEB_[random].dll files located in
       # C:\Windows\Microsoft. NET\Framework64\[version]\Temporary ASP. NET Files\root\[random]\[random]\
     - name: Check all APP_WEB_[random].dll files located in C:\Windows\Microsoft. NET\Framework64\
       ansible.windows.win_find:
         paths: 'C:\Windows\Microsoft. NET\Framework64'
-        age: {{ new }}
+        age: '{{ new }}'
         recurse: true
         follow: true
         hidden: true
@@ -160,39 +161,50 @@
           - 'APP_WEB_*.dll'
       register: app_web_dll_files
 
-    # Note: The next time the web application is accessed, it will be rebuilt properly. 
+    # Note: The next time the web application is accessed, it will be rebuilt properly.
     #       It is normal to have 1 APP_WEB_[random].dll file located in this directory.
-    - name: Start IIS (iisreset /start) 
+    - name: Start IIS (iisreset /start)
       ansible.windows.win_command: iisreset /start
-      become: yes
+      become: true
 
     - name: Remove any unauthorized user accounts on MOVEit.
       debug:
         msg: 'See Progress MOVEit Users Documentation article - https://docs.progress.com/bundle/moveit-transfer-web-admin-help-2022/page/Users.html'
 
-    - name:  Remove all active sessions on MOVEit.
+    - name: Remove all active sessions on MOVEit.
       debug:
-        msg: 'The steps to remove all active sessions can be found in the Admin Features on the Home Page guide: https://docs.progress.com/bundle/moveit-transfer-web-admin-help-2022/page/Admin-Features-on-the-Home-Page.html'
+        msg: |
+          The steps to remove all active sessions can be found in the Admin Features on the Home Page guide:
+          https://docs.progress.com/bundle/moveit-transfer-web-admin-help-2022/page/Admin-Features-on-the-Home-Page.html
 
     - name: Review MOVEit logs for unexpected downloads of files from unknown IPs or large numbers of files downloaded.
       debug:
-        msg: 'For more information on reviewing logs, please refer to MOVEit Transfer Logs guide: https://docs.progress.com/bundle/moveit-transfer-web-admin-help-2022/page/Logs.html'
+        msg: |
+          For more information on reviewing logs, please refer to MOVEit Transfer Logs guide:
+          https://docs.progress.com/bundle/moveit-transfer-web-admin-help-2022/page/Logs.html
 
     - name: Review IIS logs for any events including GET /human2.aspx.
       ansible.windows.win_powershell:
         script: |
           Get-Childitem –Path C:\inetpub\logs\LogFiles\ -Include *human2* -Recurse -force -ErrorAction SilentlyContinue
       register: iis_human2_log_check
-      become: yes
+      become: true
 
     - name: Reset service account credentials for affected systems and MOVEit Service Account.
-      debug: 
+      debug:
         msg: 'See KB 000115941: https://community.progress.com/s/article/Transfer-Automation-Change-Windows-Service-Account-Password'
-    
+
     - name: Patch your system
       debug:
-        msg: 'For patching the May 31 and June 9 vulnerabilities, use the installers listed here: https://community.progress.com/s/article/MOVEit-Transfer-Critical-Vulnerability-CVE-2023-35036-June-9-2023 . After applying that, to fix the June 15 CVE, use this: https://community.progress.com/s/article/MOVEit-Transfer-Critical-Vulnerability-15June2023'
+        msg: |
+          For patching the May 31 and June 9 vulnerabilities, use the installers listed here:
+          https://community.progress.com/s/article/MOVEit-Transfer-Critical-Vulnerability-CVE-2023-35036-June-9-2023
+          To fix the June 15 CVE after applying the previous patch, use this link:
+          https://community.progress.com/s/article/MOVEit-Transfer-Critical-Vulnerability-15June2023
 
     - name: Verification
       debug:
-        msg: 'To confirm the files have been successfully deleted and no unauthorized accounts remain, follow steps 2A again (can be accomplished by running this playbook again after patching). If you do find indicators of compromise, you should reset the service account credentials again.'
+        msg: |
+          To confirm the files have been successfully deleted and no unauthorized accounts remain, follow steps 2A again
+          (can be accomplished by running this playbook again after patching).
+          If you do find indicators of compromise, you should reset the service account credentials again.

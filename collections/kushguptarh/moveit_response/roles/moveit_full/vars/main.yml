@@ -1,0 +1,8 @@
+---
+ansible_connection: winrm
+ansible_winrm_transport: ntlm
+ansible_become_method: runas       # Since Ansible 2.3, privilege elevation can be used on Windows hosts through the runas method:
+                                   # - https://docs.ansible.com/ansible/2.7/user_guide/become.html#become-and-windows
+ansible_become_user: '{{ ansible_user }}'
+firewall_state: "present"
+new: '30w'                         # You can choose seconds, minutes, hours, days or weeks by the first letter of those words (e.g., “2s”, “10d”, 1w”)
