@@ -1,2 +1,126 @@
 ---
-# tasks file for moveit_full
+- name: Identify a Windows and MOVEit host
+  ansible.builtin.include_role:
+    name: moveit_server_check
+
+- name: Disable all inbound and outbound HTTP and HTTPS traffic to your MOVEit Transfer environment
+  ansible.builtin.include_role:
+    name: moveit_firewall_rules
+  vars:
+    firewall_rule_state: '{{ firewall_state }}'
+
+# Remidiation calls for the deletion of the human2.aspx (or any files with human2 prefix) and .cmdline script files
+# Note: The web shell was initially observed with the name human2.aspx in an effort to masquerade
+#       as the legitimate human.aspx file present as part of MOVEit Transfer software.
+#       https://www.cisa.gov/news-events/cybersecurity-advisories/aa23-158a
+- name: Check for any instances of the human2.aspx (or any files with human2 prefix)
+  ansible.windows.win_find:
+    paths: C:\
+    recurse: true                    # Will recursively descend into the directory looking for files or folders.
+    follow: true                     # Follows symlinks in the path
+    hidden: true                     # Including hidden files or folders
+    get_checksum: false              # When scanning directories with a large number of files and data it is recommended to set get_checksum=false
+    patterns:
+      - 'human2.*'
+  register: human2_files
+
+- name: Look for any new .cmdline files
+  ansible.windows.win_find:
+    paths: C:\
+    age: '{{ new }}'   # Find files newer than 30 weeks
+                       # - You can choose seconds, minutes, hours, days or weeks by the first letter of those words (e.g., “2s”, “10d”, 1w”)
+    recurse: true
+    follow: true
+    hidden: true
+    get_checksum: false
+    patterns:
+      - '*.cmdline'
+  register: new_cmdline_files
+
+- name: Look for any new files created in the C:\MOVEitTransfer\wwwroot directory
+  ansible.windows.win_find:
+    paths: C:\MOVEitTransfer\wwwroot
+    age: '{{ new }}'
+    recurse: true
+    follow: true
+    hidden: true
+    get_checksum: false
+  register: new_wwwroot_files
+
+- name: Look for new files created in the C:\Windows\TEMP\[random]\ directory with a file extension of [.]cmdline
+  ansible.windows.win_find:
+    paths: C:\Windows\TEMP
+    age: '{{ new }}'
+    recurse: true
+    follow: true
+    hidden: true
+    get_checksum: false
+    patterns:
+      - '*.cmdline'
+  register: new_temp_cmdline_files
+
+- name: Stop IIS (iisreset /stop)
+  ansible.windows.win_command: iisreset /stop
+  become: true
+
+  # Remidiation calls for the Deletion of all APP_WEB_[random].dll files located in
+  # C:\Windows\Microsoft. NET\Framework64\[version]\Temporary ASP. NET Files\root\[random]\[random]\
+- name: Check all APP_WEB_[random].dll files located in C:\Windows\Microsoft. NET\Framework64\
+  ansible.windows.win_find:
+    paths: 'C:\Windows\Microsoft. NET\Framework64'
+    age: '{{ new }}'
+    recurse: true
+    follow: true
+    hidden: true
+    get_checksum: false
+    patterns:
+      - 'APP_WEB_*.dll'
+  register: app_web_dll_files
+
+# Note: The next time the web application is accessed, it will be rebuilt properly.
+#       It is normal to have 1 APP_WEB_[random].dll file located in this directory.
+- name: Start IIS (iisreset /start)
+  ansible.windows.win_command: iisreset /start
+  become: true
+
+- name: Remove any unauthorized user accounts on MOVEit.
+  ansible.builtin.debug:
+    msg: 'See Progress MOVEit Users Documentation article - https://docs.progress.com/bundle/moveit-transfer-web-admin-help-2022/page/Users.html'
+
+- name: Remove all active sessions on MOVEit.
+  ansible.builtin.debug:
+    msg: |
+      The steps to remove all active sessions can be found in the Admin Features on the Home Page guide:
+      https://docs.progress.com/bundle/moveit-transfer-web-admin-help-2022/page/Admin-Features-on-the-Home-Page.html
+
+- name: Review MOVEit logs for unexpected downloads of files from unknown IPs or large numbers of files downloaded.
+  ansible.builtin.debug:
+    msg: |
+      For more information on reviewing logs, please refer to MOVEit Transfer Logs guide:
+      https://docs.progress.com/bundle/moveit-transfer-web-admin-help-2022/page/Logs.html
+
+- name: Review IIS logs for any events including GET /human2.aspx.
+  ansible.windows.win_powershell:
+    script: |
+      Get-Childitem –Path C:\inetpub\logs\LogFiles\ -Include *human2* -Recurse -force -ErrorAction SilentlyContinue
+  register: iis_human2_log_check
+  become: true
+
+- name: Reset service account credentials for affected systems and MOVEit Service Account.
+  ansible.builtin.debug:
+    msg: 'See KB 000115941: https://community.progress.com/s/article/Transfer-Automation-Change-Windows-Service-Account-Password'
+
+- name: Patch your system
+  ansible.builtin.debug:
+    msg: |
+      For patching the May 31 and June 9 vulnerabilities, use the installers listed here:
+      https://community.progress.com/s/article/MOVEit-Transfer-Critical-Vulnerability-CVE-2023-35036-June-9-2023
+      To fix the June 15 CVE after applying the previous patch, use this link:
+      https://community.progress.com/s/article/MOVEit-Transfer-Critical-Vulnerability-15June2023
+
+- name: Verification
+  ansible.builtin.debug:
+    msg: |
+      To confirm the files have been successfully deleted and no unauthorized accounts remain, follow steps 2A again
+      (can be accomplished by running this playbook again after patching).
+      If you do find indicators of compromise, you should reset the service account credentials again.
