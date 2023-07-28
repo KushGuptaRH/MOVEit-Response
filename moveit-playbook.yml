@@ -1,0 +1,16 @@
+---
+name: MoveIT Response
+hosts: MoveIT_Servers
+tasks:
+  - name: kick off the full role
+    ansible.builtin.include_role:
+      name: kushguptarh.moveit_response.moveit_full
+    vars:
+      - ansible_connection: winrm
+      - ansible_winrm_transport: ntlm
+      - ansible_become_method: runas  # Since Ansible 2.3, privilege elevation can be used on Windows hosts through the runas method:
+                                      # - https://docs.ansible.com/ansible/2.7/user_guide/become.html#become-and-windows
+      - ansible_become_user: '{{ ansible_user }}'
+      - firewall_state: "present"
+      - new: '30w'
+      
