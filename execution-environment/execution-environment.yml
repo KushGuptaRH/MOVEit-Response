@@ -1,0 +1,23 @@
+---
+version: 3
+
+build_arg_defaults:
+  ANSIBLE_GALAXY_CLI_COLLECTION_OPTS: '--pre'
+
+dependencies:
+  galaxy:
+    collections:
+      - name: community.windows
+      - name: ansible.windows
+      - name: kushguptarh.moveit_response
+  python_interpreter:
+    package_system: "python3.9"
+    python_path: "/usr/bin/python3.9"
+  # system:
+
+images:
+  base_image:
+    name: registry.redhat.io/ansible-automation-platform-24/ee-minimal-rhel8:latest
+
+options:
+  package_manager_path: /usr/bin/microdnf
