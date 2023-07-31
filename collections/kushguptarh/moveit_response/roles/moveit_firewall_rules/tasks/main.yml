@@ -16,6 +16,6 @@
     action: block
     direction: "{{ item.Direction }}"
     protocol: tcp
-    state: "{{ firewall_rule_state }}"
+    state: "{{ moveit_firewall_rules_state }}"
     enabled: true
-  loop: "{{ firewall_rules }}"
+  loop: "{{ moveit_firewall_rules_list }}"

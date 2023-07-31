@@ -7,7 +7,7 @@
   ansible.builtin.include_role:
     name: moveit_firewall_rules
   vars:
-    firewall_rule_state: '{{ firewall_state }}'
+    moveit_firewall_rules_state: '{{ firewall_state }}'
 
 # Remidiation calls for the deletion of the human2.aspx (or any files with human2 prefix) and .cmdline script files
 # Note: The web shell was initially observed with the name human2.aspx in an effort to masquerade

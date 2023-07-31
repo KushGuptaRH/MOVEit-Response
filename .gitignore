@@ -1,3 +1,4 @@
 **/.DS_Store
 **/.vscode
 /execution-environment/context/_build
+**/inventory.ini
