@@ -1,8 +1,8 @@
 ---
 moveit_firewall_rules_list:
-  - {name: "MOVEit HTTP default inbound block", localport: 80, Direction: "Inbound"}
-  - {name: "MOVEit HTTPS default inbound block", localport: 443, Direction: "Inbound"}
-  - {name: "MOVEit HTTP default outbound block", localport: 80, Direction: "Outbound"}
-  - {name: "MOVEit HTTPS default outbound block", localport: 443, Direction: "Outbound"}
+  - {name: "MOVEit HTTP default inbound block", localport: 80, Direction: "in"}
+  - {name: "MOVEit HTTPS default inbound block", localport: 443, Direction: "in"}
+  - {name: "MOVEit HTTP default outbound block", localport: 80, Direction: "out"}
+  - {name: "MOVEit HTTPS default outbound block", localport: 443, Direction: "out"}
 
-firewall_rule_state: "present"
+moveit_firewall_rules_state: "present"
