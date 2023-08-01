@@ -1,14 +1,13 @@
 # MOVEit-Response 
 
 #### Created as a proof of concept to show how Ansible can automate tasks to help mitigate and analyze Windows MOVEit servers
-<br>
+
 **SHOULD NOT BE RUN** without prior validation, testing, reading, and testing through the playbook. 
-<br>
 <br>
 
 Testing is currently happening on a MoveIT server thanks to [Emergent, LLC](https://www.emergent360.com/).
 <br>
-<br>This playbook will not be able to do all the remediation steps to the MOVEit application itself since the API will be down, but it can do a lot with the Windows system to immediately take the recommended mitigation steps and do some verification.
+<br>This playbook will **not** be able to do all the remediation steps to the MOVEit application itself since the API will be down, but it can do a lot with the Windows system to immediately take the recommended mitigation steps and do some verification.
 <br>
 <br>Check out Progress Software's security notice [here](https://www.progress.com/security/moveit-transfer-and-moveit-cloud-vulnerability).
 <br>
