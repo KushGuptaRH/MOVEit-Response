@@ -4,7 +4,9 @@
 <br>
 **SHOULD NOT BE RUN** without prior validation, testing, reading, and testing through the playbook. 
 <br>
-<br>Testing is currently happening on a MoveIT server thanks to [Emergent, LLC](https://www.emergent360.com/).
+<br>
+
+Testing is currently happening on a MoveIT server thanks to [Emergent, LLC](https://www.emergent360.com/).
 <br>
 <br>This playbook will not be able to do all the remediation steps to the MOVEit application itself since the API will be down, but it can do a lot with the Windows system to immediately take the recommended mitigation steps and do some verification.
 <br>
