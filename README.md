@@ -2,25 +2,30 @@
 
 #### Created as a proof of concept to show how Ansible can automate tasks to help mitigate and analyze Windows MOVEit servers
 <br>
-
-**SHOULD NOT BE RUN** without prior validation, testing, reading, and testing through the playbook. Has not been tested on a MoveIT server due to a lack of availability on my end. This playbook will not be able to do all the remediation steps to the MOVEit application itself since the API will be down, but it can do a lot with the Windows system to immediately take the recommended mitigation steps and do some verification.
+**SHOULD NOT BE RUN** without prior validation, testing, reading, and testing through the playbook. 
+<br>
+<br>Testing is currently happening on a MoveIT server thanks to [Emergent, LLC](https://www.emergent360.com/).
+<br>
+<br>This playbook will not be able to do all the remediation steps to the MOVEit application itself since the API will be down, but it can do a lot with the Windows system to immediately take the recommended mitigation steps and do some verification.
+<br>
+<br>Check out Progress Software's security notice [here](https://www.progress.com/security/moveit-transfer-and-moveit-cloud-vulnerability)
+<br>
+<br>Between May 31 and June 16, three distinct vulnerabilities have been reported that are affecting MOVEit Transfer and MOVEit Cloud.
+<br>
+<br>"June 18, 2023,...Our product teams and third-party forensics partner have reviewed the vulnerability and associated patch and have deemed that the issue has been addressed. This fix has been applied to all MOVEit Cloud clusters and is available for MOVEit Transfer customers."
 <br>
 <br>
-
-https://www.progress.com/security/moveit-transfer-and-moveit-cloud-vulnerability
-
-
-Between May 31 and June 16, three distinct vulnerabilities have been reported that are affecting MOVEit Transfer and MOVEit Cloud.
-
-"June 18, 2023,...Our product teams and third-party forensics partner have reviewed the vulnerability and associated patch and have deemed that the issue has been addressed. This fix has been applied to all MOVEit Cloud clusters and is available for MOVEit Transfer customers."
-
-
 "June 15, 2023, Today, a third-party publicly posted a new SQLi vulnerability. We have taken HTTPs traffic down for MOVEit Cloud in light of the newly published vulnerability and are asking All MOVEit Transfer customers to immediately take down their HTTP and HTTPs traffic to safeguard their environments while the patch is finalized. We are currently testing the patch and we will update customers shortly."
 <br>
-MOVEit Transfer Critical Vulnerability (May 2023) (CVE-2023-34362)
+<br>
+MOVEit Transfer Critical Vulnerability (May 31, 2023) [CVE-2023-34362](https://community.progress.com/s/article/MOVEit-Transfer-Critical-Vulnerability-31May2023)
+<br>
+<br>MOVEit Transfer Critical Vulnerability (June 9, 2023) [CVE-2023-35036](https://community.progress.com/s/article/MOVEit-Transfer-Critical-Vulnerability-CVE-2023-35036-June-9-2023)
+<br>
+<br>MOVEit Transfer Critical Vulnerability (June 15, 2023) [CVE-2023-35708](https://community.progress.com/s/article/MOVEit-Transfer-Critical-Vulnerability-15June2023)
 
 
-https://community.progress.com/s/article/MOVEit-Transfer-Critical-Vulnerability-31May2023
+
 
 
 ## Recommended Remediation
