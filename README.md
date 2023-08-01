@@ -11,13 +11,15 @@ Testing is currently happening on a MOVEit server thanks to [Emergent, LLC](http
 <br>
 <br>Check out Progress Software's security notice [here](https://www.progress.com/security/moveit-transfer-and-moveit-cloud-vulnerability).
 <br>
-<br>Between May 31 and June 15, three distinct vulnerabilities have been reported that are affecting MOVEit Transfer and MOVEit Cloud.
-<br>
-<br>"June 18, 2023,...Our product teams and third-party forensics partner have reviewed the vulnerability and associated patch and have deemed that the issue has been addressed. This fix has been applied to all MOVEit Cloud clusters and is available for MOVEit Transfer customers."
+<br>Between May 31 and June 15, three distinct vulnerabilities have been reported that are affecting MOVEit Transfer and MOVEit Cloud. The most recent updates include the following:
 <br>
 <br>
-"June 15, 2023, Today, a third-party publicly posted a new SQLi vulnerability. We have taken HTTPs traffic down for MOVEit Cloud in light of the newly published vulnerability and are asking All MOVEit Transfer customers to immediately take down their HTTP and HTTPs traffic to safeguard their environments while the patch is finalized. We are currently testing the patch and we will update customers shortly."
+> June 18, 2023,...Our product teams and third-party forensics partner have reviewed the vulnerability and associated patch and have deemed that the issue has been addressed. This fix has been applied to all MOVEit Cloud clusters and is available for MOVEit Transfer customers.
+
 <br>
+
+> June 15, 2023, ...a third-party publicly posted a new SQLi vulnerability. We have taken HTTPs traffic down for MOVEit Cloud in light of the newly published vulnerability and are asking All MOVEit Transfer customers to immediately take down their HTTP and HTTPs traffic to safeguard their environments while the patch is finalized. We are currently testing the patch and we will update customers shortly.
+
 <br>
 MOVEit Transfer Critical Vulnerability (May 31, 2023) [CVE-2023-34362](https://community.progress.com/s/article/MOVEit-Transfer-Critical-Vulnerability-31May2023)
 <br>
