@@ -1,3 +1,5 @@
+<base target="_blank">
+
 # MOVEit-Response 
 
 #### Created as a proof of concept to show how Ansible can automate tasks to help mitigate and analyze Windows MOVEit servers
