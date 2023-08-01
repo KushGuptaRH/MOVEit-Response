@@ -1,5 +1,3 @@
-<base target="_blank">
-
 # MOVEit-Response 
 
 #### Created as a proof of concept to show how Ansible can automate tasks to help mitigate and analyze Windows MOVEit servers
@@ -8,13 +6,13 @@
 <br>
 <br>
 
-Testing is currently happening on a MoveIT server thanks to [Emergent, LLC](https://www.emergent360.com/){:target="_blank"}.
+Testing is currently happening on a MoveIT server thanks to [Emergent, LLC](https://www.emergent360.com/).
 <br>
 <br>This playbook will not be able to do all the remediation steps to the MOVEit application itself since the API will be down, but it can do a lot with the Windows system to immediately take the recommended mitigation steps and do some verification.
 <br>
-<br>Check out Progress Software's security notice [here](https://www.progress.com/security/moveit-transfer-and-moveit-cloud-vulnerability)
+<br>Check out Progress Software's security notice [here](https://www.progress.com/security/moveit-transfer-and-moveit-cloud-vulnerability).
 <br>
-<br>Between May 31 and June 16, three distinct vulnerabilities have been reported that are affecting MOVEit Transfer and MOVEit Cloud.
+<br>Between May 31 and June 15, three distinct vulnerabilities have been reported that are affecting MOVEit Transfer and MOVEit Cloud.
 <br>
 <br>"June 18, 2023,...Our product teams and third-party forensics partner have reviewed the vulnerability and associated patch and have deemed that the issue has been addressed. This fix has been applied to all MOVEit Cloud clusters and is available for MOVEit Transfer customers."
 <br>
