@@ -4,21 +4,22 @@ version: 3
 build_arg_defaults:
   ANSIBLE_GALAXY_CLI_COLLECTION_OPTS: '--pre'
 
+images:
+  base_image:
+    name: registry.redhat.io/ansible-automation-platform-21/ee-minimal-rhel8:latest
+
 dependencies:
   galaxy:
     collections:
       - name: community.windows
       - name: ansible.windows
       - name: kushguptarh.moveit_response
-      - name: community.general
   python_interpreter:
     package_system: "python3.8"
     python_path: "/usr/bin/python3.8"
+  ansible_runner:
+    package_pip: ansible-runner==2.3.3
   # system:
-
-images:
-  base_image:
-    name: registry.redhat.io/ansible-automation-platform-21/ee-supported-rhel8:latest
 
 options:
   package_manager_path: /usr/bin/microdnf
