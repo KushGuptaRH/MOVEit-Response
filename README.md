@@ -3,7 +3,8 @@
 #### Created as a proof of concept to show how Ansible can automate tasks to help mitigate and analyze Windows MOVEit servers
 <br>
 
-**SHOULD NOT BE RUN** without prior validation, testing, reading, and testing through the playbook. Has not been tested on a MoveIT server due to a lack of availability on my end. This playbook will not be able to do all the remediation steps to the MOVEit application itself since the API will be down, but it can do a lot with the Windows system to immediately take the recommended mitigation steps and do some verification.
+**SHOULD NOT BE RUN** without prior validation, testing, reading, and testing through the playbook. Testing is currently happening on a MoveIT server thanks to [Emergent, LLC](https://www.emergent360.com/). 
+This playbook will not be able to do all the remediation steps to the MOVEit application itself since the API will be down, but it can do a lot with the Windows system to immediately take the recommended mitigation steps and do some verification.
 <br>
 <br>
 
