@@ -7,10 +7,10 @@
             msg: 'Not a Windows host'
         when: ansible_facts['os_family'] != 'Windows'
 
-        # You can change the moveit_exe_path variable if your installations are outside of the default path
+        # You can change the moveit_server_check_path variable if your installations are outside of the default path
       - name: Attempt to identify the MOVEit Executable
         ansible.windows.win_stat:
-            path: '{{ moveit_exe_path | default("C:\Program Files\MOVEit\MiCentralCFG.exe") }}'
+            path: '{{ moveit_server_check_path | default("C:\Program Files\MOVEit\MiCentralCFG.exe") }}'
         register: installed
         failed_when: installed.stat.exists == 'false'
 

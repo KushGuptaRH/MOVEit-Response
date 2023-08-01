@@ -14,7 +14,7 @@ Role Variables
 
 ansible_facts['os_family']:
   - Ansible Facts mechanism for determining Windows systems
-MOVEit_path: 
+moveit_server_check_path: 
   - Defaults to the default path of the MOVEit server documentation, C:\Program Files\MOVEit\MiCentralCFG.exe. 
   - Can be set to whatever drive/directory you want to check for the MOVEit Executable. 
   - Stored in defaults/main.yml

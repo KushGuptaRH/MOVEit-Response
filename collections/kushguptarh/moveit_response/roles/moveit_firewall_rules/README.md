@@ -12,11 +12,11 @@ One module is being used in this role, community.windows.win_firewall_rule. Make
 Role Variables
 --------------
 
-firewall_rules:
+moveit_firewall_rules_list:
   - A list of dictionary items listing the name, port, and direction of which firewall rules to establish
   - Located in vars/main.yml 
 
-firewall_rule_state:
+moveit_firewall_rules_state:
   - Determines what state you want the firewall rules to be in.
   - Options are 'present' and 'absent' for this variable.
   - Located in vars/main.yml
