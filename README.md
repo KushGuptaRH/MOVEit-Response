@@ -14,7 +14,7 @@ Testing is currently happening on a MOVEit server thanks to [Emergent, LLC](http
 <br>Between May 31 and June 15, three distinct vulnerabilities have been reported that are affecting MOVEit Transfer and MOVEit Cloud. The most recent updates include the following:
 <br>
 <br>
-> June 18, 2023,...Our product teams and third-party forensics partner have reviewed the vulnerability and associated patch and have deemed that the issue has been addressed. This fix has been applied to all MOVEit Cloud clusters and is available for MOVEit Transfer customers.
+> June 18, 2023, ...Our product teams and third-party forensics partner have reviewed the vulnerability and associated patch and have deemed that the issue has been addressed. This fix has been applied to all MOVEit Cloud clusters and is available for MOVEit Transfer customers.
 
 <br>
 
