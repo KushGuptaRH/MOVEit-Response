@@ -2,7 +2,7 @@
 
 ### Created as a proof of concept to show how Ansible can automate tasks to help mitigate and analyze Windows MOVEit servers
 
- - **SHOULD NOT BE RUN** without prior validation, testing, reading, and testing through the playbook. 
+ - **SHOULD NOT BE RUN** without prior validation, testing, reading, and testing through the playbook/collections. 
 - Testing is currently happening on a MOVEit server thanks to [Emergent, LLC](https://www.emergent360.com/).
 - MOVEit is software and a registered trademark of Progress Software Corporation.
 - An extensive timeline can be found [here](https://www.cybersecuritydive.com/news/moveit-breach-timeline/687417/) if all this sounds new
@@ -62,7 +62,7 @@ MOVEit Transfer Critical Vulnerability (May 31, 2023) [CVE-2023-34362](https://c
       
    b. [Reset Service Account Credentials](https://community.progress.com/s/article/Transfer-Automation-Change-Windows-Service-Account-Password)
 
- 3. [Apply the Patch - available with v12.1 or later](https://community.progress.com/s/article/MOVEit-Transfer-Critical-Vulnerability-31May2023)
+ 3. [Apply the first May 31 Patch - available with v12.1 or later](https://community.progress.com/s/article/MOVEit-Transfer-Critical-Vulnerability-31May2023)
 
  4. Verification
  - To confirm the files have been successfully deleted and no unauthorized accounts remain, follow steps 2a again. If you do find indicators of compromise, you should reset the service account credentials again.
