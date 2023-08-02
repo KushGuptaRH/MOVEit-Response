@@ -6,6 +6,7 @@
 - Testing is currently happening on a MOVEit server thanks to [Emergent, LLC](https://www.emergent360.com/).
 - MOVEit is software and a registered trademark of Progress Software Corporation.
 <br>
+
 This playbook will **not** be able to do all the remediation steps to the MOVEit application itself since the API will be down. It can still do a lot with the Windows system itself to immediately take the recommended mitigation steps and do some verification.
 <br>
 <br>
@@ -67,4 +68,4 @@ MOVEit Transfer Critical Vulnerability (May 31, 2023) [CVE-2023-34362](https://c
 
  5. Refer to MOVEit Transfer Critical Vulnerability – [CVE-2023-35708](https://community.progress.com/s/article/MOVEit-Transfer-Critical-Vulnerability-15June2023) (June 15, 2023) to apply the next vulnerability fixes.
 
- 6. Refer to MOVEit Transfer Service Pack for 1 Critical and 2 High CVEs (July, 2023) to apply the next fixes after that. [CVE-2023-36934, CVE-2023-36932, CVE-2023-36933](https://community.progress.com/s/article/MOVEit-Transfer-2020-1-Service-Pack-July-2023)
+ 6. Refer to MOVEit Transfer Service Pack for 1 Critical and 2 High CVEs - [CVE-2023-36934, CVE-2023-36932, CVE-2023-36933](https://community.progress.com/s/article/MOVEit-Transfer-2020-1-Service-Pack-July-2023) (July, 2023) to apply the next fixes after that. 
