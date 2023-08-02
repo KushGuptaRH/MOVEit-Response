@@ -5,6 +5,7 @@
  - **SHOULD NOT BE RUN** without prior validation, testing, reading, and testing through the playbook. 
 - Testing is currently happening on a MOVEit server thanks to [Emergent, LLC](https://www.emergent360.com/).
 - MOVEit is software and a registered trademark of Progress Software Corporation.
+- An extensive timeline can be found [here](https://www.cybersecuritydive.com/news/moveit-breach-timeline/687417/) if all this sounds new
 <br>
 
 This playbook will **not** be able to do all the remediation steps to the MOVEit application itself since the API will be down. It can still do a lot with the Windows system itself to immediately take the recommended mitigation steps and do some verification.
