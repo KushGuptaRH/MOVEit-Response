@@ -27,10 +27,10 @@
       vars:
         moveit_firewall_rules_state: '{{ firewall_state }}'
 
-# Remidiation calls for the deletion of the human2.aspx (or any files with human2 prefix) and .cmdline script files
-# Note: The web shell was initially observed with the name human2.aspx in an effort to masquerade
-#       as the legitimate human.aspx file present as part of MOVEit Transfer software.
-#       https://www.cisa.gov/news-events/cybersecurity-advisories/aa23-158a
+    # Remidiation calls for the deletion of the human2.aspx (or any files with human2 prefix) and .cmdline script files
+    # Note: The web shell was initially observed with the name human2.aspx in an effort to masquerade
+    #       as the legitimate human.aspx file present as part of MOVEit Transfer software.
+    #       https://www.cisa.gov/news-events/cybersecurity-advisories/aa23-158a
     - name: Check for any instances of the human2.aspx (or any files with human2 prefix)
       ansible.windows.win_find:
         paths: C:\
@@ -46,7 +46,7 @@
       ansible.windows.win_find:
         paths: C:\
         age: '{{ new }}'   # Find files newer than 30 weeks
-                          # - You can choose seconds, minutes, hours, days or weeks by the first letter of those words (e.g., “2s”, “10d”, 1w”)
+                           # - You can choose seconds, minutes, hours, days or weeks by the first letter of those words (e.g., “2s”, “10d”, 1w”)
         recurse: true
         follow: true
         hidden: true
@@ -81,8 +81,8 @@
       ansible.windows.win_command: iisreset /stop
       become: true
 
-      # Remidiation calls for the Deletion of all APP_WEB_[random].dll files located in
-      # C:\Windows\Microsoft. NET\Framework64\[version]\Temporary ASP. NET Files\root\[random]\[random]\
+      # Note: Remidiation calls for the Deletion of all APP_WEB_[random].dll files located in
+      #       C:\Windows\Microsoft. NET\Framework64\[version]\Temporary ASP. NET Files\root\[random]\[random]\
     - name: Check all APP_WEB_[random].dll files located in C:\Windows\Microsoft. NET\Framework64\
       ansible.windows.win_find:
         paths: 'C:\Windows\Microsoft. NET\Framework64'
