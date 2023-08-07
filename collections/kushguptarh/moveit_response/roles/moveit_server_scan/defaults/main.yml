@@ -1,0 +1,3 @@
+---
+# defaults file for moveit_server_scan
+moveit_server_scan_path: ~
