@@ -5,3 +5,18 @@
     name: yara
     state: present
 
+- name: Copy over the yara rules
+  ansible.windows.win_copy:
+    src: '{{ item }}'
+    dest: C:\Temp\
+  loop: moveit_server_scan_rules
+
+- name: Concatenate a list to string
+  ansible.builtin.set_fact:
+    rules_string: "{{ moveit_server_scan_rules | join(' ') }}"
+
+- name: Run the yara rules
+  ansible.windows.win_command:
+    cmd: 'yara {{ rules_string }} C:\'
+    chdir: C:\Temp
+  register: yara_output

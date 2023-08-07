@@ -1,7 +1,7 @@
 galaxy_info:
-  role_name: moveit_server_check
+  role_name: moveit_server_scan
   author: Kush Gupta
-  description: A role to identify first a Windows server, and then a MOVEit Executable
+  description: A role to check if a MOVEit server is vulnerable by using a CISA recommended YARA file
   company: Red Hat
 
   # Choose a valid license ID from https://spdx.org - some suggested licenses:

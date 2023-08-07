@@ -1,23 +1,19 @@
 Role Name
 =========
 
-This role checks and fails if the hosts it is running on are not Windows Servers and do not have a MiCentralCFG.exe (main execution) 
+This role checks Windows hosts for files known to be associated with the MOVEit ransomware attacks. It does this by making sure chocolatey and yara are installed, copying over the yara rules specified in moveit_server_scan_rules to the C:\Temp\ directory, and then running the rules.
 
 
 Requirements
 ------------
 
-Two modules are being used in this role, ansible.windows.win_stat and ansible.builtin.fail. Make sure you have access to both. This role also relies on ansible_facts['os_family'], so make sure your facts are turned on/cached.
+Four modules are being used in this role, all contained in ansible.windows and ansible.builtin.
 
 Role Variables
 --------------
 
-ansible_facts['os_family']:
-  - Ansible Facts mechanism for determining Windows systems
-moveit_server_check_path: 
-  - Defaults to the default path of the MOVEit server documentation, C:\Program Files\MOVEit\MiCentralCFG.exe. 
-  - Can be set to whatever drive/directory you want to check for the MOVEit Executable. 
-  - Stored in defaults/main.yml
+moveit_server_scan_rules:
+  - list of the yara rule files to run on the windows hosts
 
 Dependencies
 ------------
@@ -29,7 +25,7 @@ Example Playbook
 
     - hosts: Suspected-MOVEit-servers
       roles:
-         - role: kushguptarh.moveit_server_check
+         - role: kushguptarh.moveit_server_scan
 
 License
 -------
