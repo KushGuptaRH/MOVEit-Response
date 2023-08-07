@@ -11,10 +11,10 @@
 This playbook will **not** be able to do all the remediation steps to the MOVEit application itself since the API will be down. It can still do a lot with the Windows system itself to immediately take the recommended mitigation steps and do some verification.
 <br>
 <br>
-
 Check out Progress Software's first security notice [here](https://www.progress.com/security/moveit-transfer-and-moveit-cloud-vulnerability), the second [here](https://community.progress.com/s/article/MOVEit-Transfer-2020-1-Service-Pack-July-2023), and a really great MOVEit security guide [here](https://www.mandiant.com/resources/reports/moveit-transfer-containment-and-hardening-guide) by Mandiant.
 <br>
-<br>Between May 31 and July 6, six distinct vulnerabilities (4 critical, 2 high) have been reported that are affecting MOVEit Transfer and MOVEit Cloud. The most recent updates include the following:
+<br>
+Between May 31 and July 6, six distinct vulnerabilities (4 critical, 2 high) have been reported that are affecting MOVEit Transfer and MOVEit Cloud. The most recent updates include the following:
 <br>
 
 > July, 2023, ...In response to recent customer feedback, we are formalizing a regular Service Pack program for MOVEit products, including MOVEit Transfer and MOVEit Automation... This limited Service Pack contains fixes for three newly disclosed CVEs... Progress Software highly recommends you apply this Service Pack for product updates and security improvements.
