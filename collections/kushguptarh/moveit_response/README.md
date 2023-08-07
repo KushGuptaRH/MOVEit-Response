@@ -56,7 +56,8 @@ MOVEit Transfer Critical Vulnerability (May 31, 2023) [CVE-2023-34362](https://c
      - On the MOVEit Transfer server, look for new APP_WEB_[random].dll files created in the C:\Windows\Microsoft. NET\Framework64\[version]\Temporary ASP .NET Files\root\[random]\[random]\ directory:
      - Stop IIS (iisreset /stop)
        - Delete all APP_WEB_[random].dll files located in C:\Windows\Microsoft. NET\Framework64\[version]\Temporary ASP. NET Files\root\[random]\[random]\
-     - Start IIS (iisreset /start). Note: The next time the web application is accessed, it will be rebuilt properly. It is normal to have 1 APP_WEB_[random].dll file located in this directory.
+     - Start IIS (iisreset /start). 
+       - Note: The next time the web application is accessed, it will be rebuilt properly. It is normal to have 1 APP_WEB_[random].dll file located in this directory.
     - Remove any unauthorized user accounts and all active sessions
     - Review logs
       
