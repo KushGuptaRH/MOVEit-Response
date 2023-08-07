@@ -1,6 +1,6 @@
 # MOVEit-Response 
 
-### Created as a proof of concept to show how Ansible can automate tasks to help mitigate and analyze Windows MOVEit servers
+### Created as a proof of concept to show how Ansible can automate tasks to help mitigate and analyze the ransomeware attacks on Windows MOVEit servers
 
  - **SHOULD NOT BE RUN** without prior validation, testing, reading, and testing through the playbook/collections. 
 - Testing is currently happening on a MOVEit server thanks to [Emergent, LLC](https://www.emergent360.com/).
