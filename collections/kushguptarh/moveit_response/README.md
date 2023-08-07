@@ -65,7 +65,7 @@ MOVEit Transfer Critical Vulnerability (May 31, 2023) [CVE-2023-34362](https://c
  3. [Apply the first May 31 Patch - available with v12.1 or later](https://community.progress.com/s/article/MOVEit-Transfer-Critical-Vulnerability-31May2023)
 
  4. Verification
-    - To confirm the files have been successfully deleted and no unauthorized accounts remain, follow steps 2a again. If you do find indicators of compromise, you should reset the service account credentials again.
+    - To confirm the files have been successfully deleted and no unauthorized accounts remain, follow step 2 again. If you do find indicators of compromise, you should reset the service account credentials again.
 
  5. Refer to MOVEit Transfer Critical Vulnerability – [CVE-2023-35708](https://community.progress.com/s/article/MOVEit-Transfer-Critical-Vulnerability-15June2023) (June 15, 2023) to apply the next vulnerability fixes.
 
