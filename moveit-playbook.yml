@@ -11,18 +11,18 @@
     - new: '30w'
   tasks:
     # - name: Kick off the full role
-    #   ansible.builtin.include_role:
+    #   ansible.builtin.import_role:
     #     name: kushguptarh.moveit_response.moveit_full
     #   vars:
     #     - firewall_state: "present"
     #     - new: '30w'
 
     - name: Identify a Windows and MOVEit host
-      ansible.builtin.include_role:
+      ansible.builtin.import_role:
         name: moveit_server_check
 
     - name: Disable all inbound and outbound HTTP and HTTPS traffic to your MOVEit Transfer environment
-      ansible.builtin.include_role:
+      ansible.builtin.import_role:
         name: moveit_firewall_rules
       vars:
         moveit_firewall_rules_state: '{{ firewall_state }}'
