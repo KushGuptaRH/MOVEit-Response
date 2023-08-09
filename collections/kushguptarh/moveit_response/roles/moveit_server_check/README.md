@@ -1,4 +1,4 @@
-Role Name
+moveit_server_check
 =========
 
 This role checks and fails if the hosts it is running on are not Windows Servers and do not have a MiCentralCFG.exe (main execution) 
