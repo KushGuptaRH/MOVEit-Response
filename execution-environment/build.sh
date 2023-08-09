@@ -1,6 +1,8 @@
 #!/bin/bash
 
-podman machine start
+# podman machine start
+
+ansible-galaxy collection install kushguptarh.moveit_response --force
 
 echo 'podman machine started'
 
@@ -16,6 +18,6 @@ podman image prune -a -f
 
 echo 'podman artifacts cleaned'
 
-podman machine stop
+# podman machine stop
 
 echo 'see ya next bug'

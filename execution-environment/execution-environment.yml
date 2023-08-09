@@ -6,7 +6,7 @@ build_arg_defaults:
 
 images:
   base_image:
-    name: registry.redhat.io/ansible-automation-platform-21/ee-minimal-rhel8:latest
+    name: registry.redhat.io/ansible-automation-platform-24/ee-minimal-rhel8:latest
 
 dependencies:
   galaxy:
@@ -15,9 +15,10 @@ dependencies:
       - name: ansible.windows
       - name: chocolatey.chocolatey
       - name: kushguptarh.moveit_response
-  python_interpreter:
-    package_system: "python3.8"
-    python_path: "/usr/bin/python3.8"
+        version: 1.3.5
+  # python_interpreter:
+  #   package_system: "python3.8"
+  #   python_path: "/usr/bin/python3.8"
   ansible_runner:
     package_pip: ansible-runner
   # system:
