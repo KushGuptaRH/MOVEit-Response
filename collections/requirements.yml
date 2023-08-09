@@ -1,4 +1,5 @@
 collections:
   - name: community.windows
   - name: ansible.windows
+  - name: chocolatey.chocolatey
   - name: kushguptarh.moveit_response

@@ -13,12 +13,13 @@ dependencies:
     collections:
       - name: community.windows
       - name: ansible.windows
+      - name: chocolatey.chocolatey
       - name: kushguptarh.moveit_response
   python_interpreter:
     package_system: "python3.8"
     python_path: "/usr/bin/python3.8"
   ansible_runner:
-    package_pip: ansible-runner==2.3.3
+    package_pip: ansible-runner
   # system:
 
 options:
