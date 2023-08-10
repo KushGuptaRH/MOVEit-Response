@@ -14,10 +14,6 @@
       ansible.builtin.import_role:
         name: kushguptarh.moveit_response.moveit_server_check
 
-    - name: MOVEit host identified
-      ansible.builtin.debug:
-        msg: 'A MOVEit executable has been found on this server'
-
     - name: Disable all inbound and outbound HTTP and HTTPS traffic to your MOVEit Transfer environment
       ansible.builtin.import_role:
         name: kushguptarh.moveit_response.moveit_firewall_rules

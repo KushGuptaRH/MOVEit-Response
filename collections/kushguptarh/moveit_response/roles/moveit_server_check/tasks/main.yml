@@ -10,10 +10,6 @@
       path: C:\Program Files\MOVEit\MiCentralCFG.exe
   register: installed
 
-- name: List results of search
-  ansible.builtin.debug:
-      msg: '{{ installed.stat.exists }}'
-
 - name: Fail if no MOVEit Executable is found
   ansible.builtin.fail:
       msg: 'MOVEit Executable not found in specifed path: {{ moveit_server_check_path | default("C:\Program Files\MOVEit\MiCentralCFG.exe") }}'

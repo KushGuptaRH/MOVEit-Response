@@ -25,7 +25,7 @@
       - -r
       - ahmet_moveit.yar
       - mandiant_moveit.yar
-      - "'C:\'"
+      - 'C:'
       - 2>
       - nul
     chdir: C:\Temp
