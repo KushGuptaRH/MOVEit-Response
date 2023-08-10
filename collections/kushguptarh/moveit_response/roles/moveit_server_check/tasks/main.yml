@@ -12,12 +12,12 @@
 
 - name: List results of search
   ansible.builtin.debug:
-      msg: '{{ installed.stat }}'
+      msg: '{{ installed.stat.exists }}'
 
 - name: Fail if no MOVEit Executable is found
   ansible.builtin.fail:
-      msg: 'No MOVEit Executable found in specifed path: {{ moveit_server_check_path | default("C:\Program Files\MOVEit\MiCentralCFG.exe") }}'
-  when: installed.stat.exists == 'false'
+      msg: 'MOVEit Executable not found in specifed path: {{ moveit_server_check_path | default("C:\Program Files\MOVEit\MiCentralCFG.exe") }}'
+  when: installed.stat.exists is false
 
 - name: MOVEit Server Identified
   ansible.builtin.debug:

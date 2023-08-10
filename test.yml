@@ -1,0 +1,13 @@
+---
+- name: MoveIT Response Test and Setup
+  hosts: '{{moveit_servers|default("all")}}' # The group of hosts you want to remediate
+  tasks:
+    - name: Make sure MOVEit directory exists
+      ansible.windows.win_file:
+        path: C:\Program Files\MOVEit
+        state: directory
+
+    - name: Create a MOVEit empty executable file
+      ansible.windows.win_file:
+        path: C:\Program Files\MOVEit\MiCentralCFG.exe
+        state: touch

@@ -20,6 +20,6 @@
 
 - name: Run the yara rules
   ansible.windows.win_command:
-    cmd: 'yara ahmet_moveit.yar mandiant_moveit.yar C:\'
+    cmd: 'C:\ProgramData\chocolatey\lib\yara\tools\yara64.exe ahmet_moveit.yar mandiant_moveit.yar C:\'
     chdir: C:\Temp
   register: yara_output
