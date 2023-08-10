@@ -18,8 +18,8 @@
         state: touch
 
     - name: Scan Filesystem
-      ansible.windows.win_file:
-        path: D:\
+      ansible.windows.win_find:
+        path: C:\
         recurse: true
       register: filesystem
 
