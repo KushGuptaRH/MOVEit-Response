@@ -22,3 +22,7 @@
         path: C:\
         recurse: true
       register: filesystem
+
+    - name: print filesystem
+      ansible.builtin.debug:
+        msg: '{{ filesystem }}'
