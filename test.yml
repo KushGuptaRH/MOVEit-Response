@@ -19,10 +19,10 @@
 
     - name: Scan Filesystem
       ansible.windows.win_file:
-        path: C:\
+        path: D:\
         recurse: true
       register: filesystem
 
-    - name: print filesystem
+    - name: Print filesystem
       ansible.builtin.debug:
         msg: '{{ filesystem }}'
