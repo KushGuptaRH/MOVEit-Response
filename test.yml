@@ -19,7 +19,7 @@
 
     - name: Scan Filesystem
       ansible.windows.win_find:
-        path: C:\
+        paths: C:\
         recurse: true
       register: filesystem
 
