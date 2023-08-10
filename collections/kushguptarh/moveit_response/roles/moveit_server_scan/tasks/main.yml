@@ -9,14 +9,17 @@
   ansible.windows.win_copy:
     src: '{{ item }}'
     dest: C:\Temp\
-  loop: moveit_server_scan_rules
+  with_items:
+    - ahmet_moveit.yar
+    - mandiant_moveit.yar
 
-- name: Concatenate a list to string
-  ansible.builtin.set_fact:
-    rules_string: "{{ moveit_server_scan_rules | join(' ') }}"
+- name: Get files in choco directory
+  ansible.windows.win_find:
+    recurse: true
+    paths: 'C:\ProgramData\chocolatey\lib'
 
 - name: Run the yara rules
   ansible.windows.win_command:
-    cmd: 'yara {{ rules_string }} C:\'
+    cmd: 'yara ahmet_moveit.yar mandiant_moveit.yar C:\'
     chdir: C:\Temp
   register: yara_output

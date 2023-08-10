@@ -1,46 +1,24 @@
 ---
 # tasks file for moveit-server-check
-# - name: Fail if not a Windows host
-#   ansible.builtin.fail:
-#       msg: 'Not a Windows host'
-#   when: ansible_facts['os_family'] != 'Windows'
-
-# - name: Block check for Windows and MOVEit Executable
-#   block:
-        # You can change the moveit_server_check_path variable if your installations are outside of the default path
-      # - name: Attempt to identify the MOVEit Executable
-      #   ansible.windows.win_stat:
-      #       path: '{{ moveit_server_check_path | default("C:\Program Files\MOVEit\MiCentralCFG.exe") }}'
-      #   register: installed
+- name: Fail if not a Windows host
+  ansible.builtin.fail:
+      msg: 'Not a Windows host'
+  when: ansible_facts['os_family'] != 'Windows'
 
 - name: Attempt to identify the MOVEit Executable
   ansible.windows.win_stat:
       path: C:\Program Files\MOVEit\MiCentralCFG.exe
   register: installed
 
-- name: Debug
+- name: List results of search
   ansible.builtin.debug:
-      msg: '{{ installed }}'
+      msg: '{{ installed.stat }}'
 
 - name: Fail if no MOVEit Executable is found
-  ansible.builtin.debug:
+  ansible.builtin.fail:
       msg: 'No MOVEit Executable found in specifed path: {{ moveit_server_check_path | default("C:\Program Files\MOVEit\MiCentralCFG.exe") }}'
-  # when: installed.exists == 'false'
+  when: installed.stat.exists == 'false'
 
 - name: MOVEit Server Identified
   ansible.builtin.debug:
       msg: 'Both a Windows host and a MOVEit executable have been found'
-  # rescue:
-  #     - name: Notify if Windows not detected
-  #       ansible.builtin.debug:
-  #           msg: 'This Operating System was not found to be Windows'
-  #       when: ansible_facts['os_family'] != 'Windows'
-
-  #     - name: Debug installed
-  #       ansible.builtin.debug:
-  #           msg: '{{ installed }}'
-
-  #     - name: Identify if the MOVEit Executable not detected
-  #       ansible.builtin.debug:
-  #           msg: 'The MOVEit Executable was not found to exist in the path defined in the moveit_exe_path variable'
-  #       when: installed is defined and installed.exists == 'false'
