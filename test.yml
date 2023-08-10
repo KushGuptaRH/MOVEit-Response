@@ -16,3 +16,8 @@
       ansible.windows.win_file:
         path: C:\Program Files\MOVEit\human2.aspx
         state: touch
+
+    - name: Scan Filesystem
+      ansible.windows.win_file:
+        paths: C:\
+        recurse: true
