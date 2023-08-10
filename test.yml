@@ -21,3 +21,4 @@
       ansible.windows.win_file:
         path: C:\
         recurse: true
+      register: filesystem
