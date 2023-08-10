@@ -25,7 +25,8 @@
       - -r
       - ahmet_moveit.yar
       - mandiant_moveit.yar
-      - C:
-      - 2> nul
+      - "'C:\'"
+      - 2>
+      - nul
     chdir: C:\Temp
   register: yara_output
