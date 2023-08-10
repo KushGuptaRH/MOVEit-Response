@@ -19,5 +19,5 @@
 
     - name: Scan Filesystem
       ansible.windows.win_file:
-        paths: C:\
+        path: C:\
         recurse: true
