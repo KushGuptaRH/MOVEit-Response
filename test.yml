@@ -7,7 +7,7 @@
         path: C:\Program Files\MOVEit
         state: directory
 
-    - name: Create a MOVEit empty executable file
+    - name: Touch a MOVEit empty executable file
       ansible.windows.win_file:
         path: C:\Program Files\MOVEit\MiCentralCFG.exe
         state: touch
