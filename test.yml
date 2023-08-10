@@ -11,3 +11,8 @@
       ansible.windows.win_file:
         path: C:\Program Files\MOVEit\MiCentralCFG.exe
         state: touch
+
+    - name: Touch a human2.aspx file
+      ansible.windows.win_file:
+        path: C:\Program Files\MOVEit\human2.aspx
+        state: touch
