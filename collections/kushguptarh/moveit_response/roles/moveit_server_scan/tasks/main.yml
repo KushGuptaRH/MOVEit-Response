@@ -23,9 +23,8 @@
     argv:
       - C:\ProgramData\chocolatey\lib\yara\tools\yara64.exe
       - -r
-      - ahmet_moveit.yar
-      - mandiant_moveit.yar
-      - 'C:\'
+      - C:\Temp\ahmet_moveit.yar
+      - C:\Temp\mandiant_moveit.yar
+      - 'C:'
       - 2> nul
-    chdir: C:\Temp
   register: yara_output
