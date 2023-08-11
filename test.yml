@@ -17,12 +17,3 @@
         path: C:\Program Files\MOVEit\human2.aspx
         state: touch
 
-    - name: Scan Filesystem
-      ansible.windows.win_find:
-        paths: C:\
-        recurse: true
-      register: filesystem
-
-    - name: Print filesystem
-      ansible.builtin.debug:
-        msg: '{{ filesystem }}'
