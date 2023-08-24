@@ -25,6 +25,6 @@
       - -r
       - C:\Temp\ahmet_moveit.yar
       - C:\Temp\mandiant_moveit.yar
-      - 'C:'
+      - '{{ scan_path }}'
       - 2> nul
   register: yara_output
