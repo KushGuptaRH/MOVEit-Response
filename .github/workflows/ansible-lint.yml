@@ -1,6 +1,6 @@
 # .github/workflows/ansible-lint.yml
 name: ansible-lint
-on:
+'on:'
   push:
     branches: ["main"]
 jobs:
