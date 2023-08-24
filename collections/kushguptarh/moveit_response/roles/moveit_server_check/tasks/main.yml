@@ -7,7 +7,7 @@
 
 - name: Attempt to identify the MOVEit Executable
   ansible.windows.win_stat:
-      path: C:\Program Files\MOVEit\MiCentralCFG.exe
+      path: '{{ moveit_server_check_path | default("C:\Program Files\MOVEit\MiCentralCFG.exe") }}'
   register: installed
 
 - name: Fail if no MOVEit Executable is found
