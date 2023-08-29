@@ -1,7 +1,11 @@
 ---
+
 - name: MoveIT Response Test and Setup
-  hosts: '{{moveit_servers|default("all")}}' # The group of hosts you want to remediate
+  # The group of hosts you want to remediate
+  hosts: '{{ moveit_servers | default("all") }}'
+
   tasks:
+
     - name: Make sure MOVEit directory exists
       ansible.windows.win_file:
         path: C:\Program Files\MOVEit
@@ -16,4 +20,3 @@
       ansible.windows.win_file:
         path: C:\Program Files\MOVEit\human2.aspx
         state: touch
-
