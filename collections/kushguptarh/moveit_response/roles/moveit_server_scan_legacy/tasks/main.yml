@@ -1,0 +1,37 @@
+---
+# tasks file for moveit_server_scan_legacy
+- name: Check for any instances of the human2.aspx (or any files with human2 prefix) and .cmdline script files
+  ansible.windows.win_find:
+    paths: '{{ scan_path }}'
+    hidden: true
+    recurse: true
+    follow: true
+    size: -1g
+    patterns:
+      - 'human2.*'
+      - '*.cmdline'
+
+- name: Look for any new files created in the C:\MOVEitTransfer\wwwroot\ directory
+  ansible.windows.win_find:
+    paths: C:\MOVEitTransfer\wwwroot\
+    hidden: true
+    recurse: true
+    follow: true
+    age: 10w
+
+- name: Look for new files created in the C:\Windows\TEMP\[random]\ directory with a file extension of [.]cmdline
+  ansible.windows.win_find:
+    paths: C:\Windows\TEMP\
+    hidden: true
+    recurse: true
+    follow: true
+    age: 10w
+
+- name: Check all APP_WEB_[random].dll files located in C:\Windows\Microsoft. NET\Framework64\
+  ansible.windows.win_find:
+    paths: C:\Windows\Microsoft. NET\Framework64\
+    hidden: true
+    recurse: true
+    follow: true
+    patterns:
+      - 'APP_WEB_*.dll'
