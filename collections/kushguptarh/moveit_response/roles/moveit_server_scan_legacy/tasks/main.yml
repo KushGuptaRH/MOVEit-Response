@@ -23,7 +23,7 @@
     hidden: true
     recurse: true
     follow: true
-    age: -3w
+    age: -1w
   register: second_scan
 
 - name: Display matching new files in wwwroot directory

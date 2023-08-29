@@ -12,6 +12,11 @@
         path: C:\Program Files\MOVEit\MiCentralCFG.exe
         state: touch
 
+    - name: Create .net directory
+      ansible.windows.win_file:
+        path: C:\Windows\Microsoft. NET\Framework64
+        state: directory
+
     - name: Touch a human2.aspx file
       ansible.windows.win_file:
         path: C:\Program Files\MOVEit\human2.aspx
