@@ -1,0 +1,8 @@
+---
+# defaults file for moveit_server_scan
+
+# ahmet_moveit.yar makes huntress_moveit.yar redundant
+moveit_server_scan_rules:
+  - ahmet_moveit.yar
+  # - huntress_moveit.yar
+  - mandiant_moveit.yar

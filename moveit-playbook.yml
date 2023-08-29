@@ -22,7 +22,7 @@
 
     - name: Scan MOVEit server for known vulnerable files across the filesystem
       ansible.builtin.import_role:
-        name: kushguptarh.moveit_response.moveit_server_scan
+        name: kushguptarh.moveit_response.moveit_server_scan_legacy
 
     - name: Remove any unauthorized user accounts on MOVEit.
       ansible.builtin.debug:
