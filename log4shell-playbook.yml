@@ -1,0 +1,166 @@
+---
+# Copyright (c) 2021 Luca Berton
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be included in all
+# copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+# SOFTWARE.
+
+- name: download detector for Apache Log4j (CVE-2021-44228)
+  hosts: localhost
+  connection: local
+  gather_facts: false
+  vars:
+    ansible_python_interpreter: "{{ ansible_playbook_python }}"
+  tasks:
+    - include_vars: "{{ vars_file }}"
+
+    - name: print information
+      ansible.builtin.debug:
+        msg: '{{ intro }}'
+
+    - name: download detector
+      ansible.builtin.get_url:
+        url: "{{ detector_baseurl }}{{ sh_detector }}"
+        dest: "./{{ sh_detector }}"
+        mode: '0644'
+        force: "{{ force_download }}"
+
+    - name: download detector signature
+      ansible.builtin.get_url:
+        url: "{{ detector_baseurl }}{{ sh_signature }}"
+        dest: "./{{ sh_signature }}"
+        mode: '0644'
+        force: "{{ force_download }}"
+      when: verify_gpg
+
+- name: detector for Apache Log4j (CVE-2021-44228)
+  hosts: "{{ HOSTS }}"
+  gather_facts: false
+  tasks:
+    - include_vars: "{{ vars_file }}"
+
+    - name: dependency present
+      ansible.builtin.package:
+        name:
+          - unzip
+          - gnupg
+          - file
+        state: present
+        update_cache: true
+      become: true
+
+    - name: create detector directory
+      ansible.builtin.file:
+        path: "{{ detector_dir }}"
+        state: directory
+      become: true
+
+    - name: copy detector file
+      ansible.builtin.copy:
+        src: "{{ sh_detector }}"
+        dest: "{{ detector_dir }}{{ sh_detector }}"
+        mode: '0755'
+        owner: root
+        group: root
+      become: true
+
+    - name: copy detector signature
+      ansible.builtin.copy:
+        src: "{{ sh_signature }}"
+        dest: "{{ detector_dir }}{{ sh_signature }}"
+        mode: '0644'
+        owner: root
+        group: root
+      become: true
+      when: verify_gpg
+
+    - name: gpg public key
+      ansible.builtin.command: '{{ gpg_public_key }}'
+      become: true
+      when: verify_gpg
+
+    - name: gpg verify detector
+      ansible.builtin.command: >-
+        gpg --verify {{ detector_dir }}{{ sh_signature }} {{ detector_dir }}{{ sh_detector }}
+      become: true
+      when: verify_gpg
+
+    - name: remove any detector run directory
+      ansible.builtin.file:
+        path: '{{ detector_dir }}{{ detector_run_dir }}'
+        state: absent
+      become: true
+      when: clean_run_before
+
+    - name: create detector run directory
+      ansible.builtin.file:
+        path: '{{ detector_dir }}{{ detector_run_dir }}'
+        state: directory
+      become: true
+
+    - name: run detector/scanner
+      ansible.builtin.command: >-
+        {{ detector_dir }}{{ sh_detector }} {{ detector_options }} --tmp {{ detector_dir }}{{ detector_run_dir }}
+      become: true
+      ignore_errors: true
+      failed_when: result.rc is odd
+      register: result
+
+    - name: print NOT vulnerable message
+      ansible.builtin.debug:
+        msg: '{{ not_vulnerable }} {{ result.stdout }}'
+        verbosity: 2
+      when: result.rc == 0
+
+    - name: print vulnerable message
+      ansible.builtin.debug:
+        msg: '{{ vulnerable }} {{ result.stdout }}'
+        verbosity: 2
+      when: result.rc == 2
+
+    - name: files in detector run directory
+      ansible.builtin.find:
+        paths: '{{ detector_dir }}{{ detector_run_dir }}'
+        patterns: '*.txt'
+        recurse: true
+      become: true
+      register: files_matched
+      when: result.rc == 2
+
+    - name: print debug
+      ansible.builtin.debug:
+        msg: '{{ files_matched }}'
+        verbosity: 2
+      when: result.rc == 2
+
+    - name: read vulnerable path(s) found
+      ansible.builtin.shell: >-
+        cat {{ detector_dir }}{{ detector_run_dir }}{{ report_txt }}
+      register: vulnerable_path
+      when: result.rc == 2
+
+    - name: print vulnerable path(s) found
+      ansible.builtin.debug:
+        msg: '{{ vulnerable_path }}'
+      when: result.rc == 2
+
+    - name: remove detector directory
+      ansible.builtin.file:
+        path: '{{ detector_dir }}'
+        state: absent
+      become: true
+      when: delete_after
