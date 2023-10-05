@@ -119,13 +119,11 @@
     - name: print NOT vulnerable message
       ansible.builtin.debug:
         msg: '{{ not_vulnerable }} {{ result.stdout }}'
-        verbosity: 2
       when: result.rc == 0
 
     - name: print vulnerable message
       ansible.builtin.debug:
         msg: '{{ vulnerable }} {{ result.stdout }}'
-        verbosity: 2
       when: result.rc == 2
 
     - name: files in detector run directory
