@@ -49,8 +49,6 @@
   hosts: "{{ HOSTS }}"
   gather_facts: false
   tasks:
-    - include_vars: "{{ vars_file }}"
-
     - name: dependency present
       ansible.builtin.package:
         name:
